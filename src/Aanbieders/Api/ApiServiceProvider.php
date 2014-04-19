@@ -2,6 +2,7 @@
 
 
 use Aanbieders\Api\Services\ProductServiceProvider;
+use Aanbieders\Api\Services\SupplierServiceProvider;
 use Illuminate\Support\ServiceProvider;
 
 class ApiServiceProvider extends ServiceProvider {
@@ -26,6 +27,7 @@ class ApiServiceProvider extends ServiceProvider {
     public function register()
     {
         $this->registerProductServiceProvider();
+        $this->registerSupplierServiceProvider();
         $this->registerApiService();
     }
 
@@ -39,12 +41,25 @@ class ApiServiceProvider extends ServiceProvider {
         );
     }
 
+    protected function registerSupplierServiceProvider()
+    {
+        $this->app['Api.supplier'] = $this->app->share(
+            function($app)
+            {
+                return new SupplierServiceProvider();
+            }
+        );
+    }
+
     protected function registerApiService()
     {
         $this->app['Api'] = $this->app->share(
             function($app)
             {
-                return new ApiService( $app['Api.product'] );
+                return new ApiService(
+                    $app['Api.product'],
+                    $app['Api.supplier']
+                );
             }
         );
     }

@@ -3,7 +3,7 @@
 
 use Ixudra\Curl\CurlService;
 
-class ApiServiceProvider {
+class BaseServiceProvider {
 
     protected  $apiClient = null;
 

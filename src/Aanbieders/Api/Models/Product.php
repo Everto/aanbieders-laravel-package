@@ -12,9 +12,7 @@ class Product extends BaseModel {
         'segment'                   => '',
         'updated'                   => '',
 
-        'supplier'                  => array(),
-        'supplier_id'               => '',
-        'supplier_name'             => '',
+        'supplier'                  => null,
 
         'status'                    => '',
         'status_code'               => '',
@@ -41,7 +39,7 @@ class Product extends BaseModel {
 
     public function __construct()
     {
-
+        //
     }
 
 }

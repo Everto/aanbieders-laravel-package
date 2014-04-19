@@ -3,7 +3,7 @@
 
 use Aanbieders\Api\Factories\ProductFactory;
 
-class ProductServiceProvider extends ApiServiceProvider {
+class ProductServiceProvider extends BaseServiceProvider {
 
     public function __construct(ProductFactory $productFactory = null)
     {

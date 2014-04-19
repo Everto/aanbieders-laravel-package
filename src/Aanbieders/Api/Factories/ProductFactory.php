@@ -3,7 +3,7 @@
 
 use Aanbieders\Api\Models\Product;
 
-class ProductFactory {
+class ProductFactory extends BaseFactory {
 
     public function createProducts(array $productsInfo)
     {
@@ -18,39 +18,45 @@ class ProductFactory {
     public function createProduct($productInfo)
     {
         $product = new Product();
-        $product->id = $productInfo['product_id'];
-        $product->type = $productInfo['producttype'];
-        $product->name = $productInfo['product_name'];
+        $product->id = $this->getAttribute('product_id', $productInfo, 0);
+        $product->type = $this->getAttribute('producttype', $productInfo, '');
+        $product->name = $this->getAttribute('product_name', $productInfo, '');
 
-        $product->group_id = $productInfo['group_id'];
-        $product->segment = $productInfo['segment'];
-        $product->updated = $productInfo['last_update'];
+        $product->group_id = $this->getAttribute('group_id', $productInfo, 0);
+        $product->segment = $this->getAttribute('segment', $productInfo, 'segment', '');
+        $product->updated = $this->getAttribute('last_update', $productInfo, '');
 
-        $product->supplier_id = $productInfo['supplier_id'];
-        $product->supplier_name = $productInfo['supplier_name'];
+        $product->supplier = $this->createSupplier($productInfo);
 
-        $product->status = $productInfo['status'];
-        $product->status_code = $productInfo['status_code'];
+        $product->status = $this->getAttribute('status', $productInfo, '');
+        $product->status_code = $this->getAttribute('status_code', $productInfo, 0);
 
-        $product->monthly_fee = $productInfo['monthly_fee'];
-        $product->contract_periods = $productInfo['contract_periods'];
-        $product->availability = $productInfo['availability'];
+        $product->monthly_fee = $this->getAttribute('monthly_fee', $productInfo, array());
+        $product->contract_periods = $this->getAttribute('contract_periods', $productInfo, array());
+        $product->availability = $this->getAttribute('availability', $productInfo, array());
 
-        $product->specifications = $productInfo['specifications'];
-        $product->texts = $productInfo['texts'];
-        $product->links = $productInfo['links'];
-        $product->reviews = $productInfo['reviews'];
+        $product->specifications = $this->getAttribute('specifications', $productInfo, array());
+        $product->texts = $this->getAttribute('texts', $productInfo, array());
+        $product->links = $this->getAttribute('links', $productInfo, array());
+        $product->reviews = $this->getAttribute('reviews', $productInfo, array());
 
-        $product->options = $productInfo['options'];
-        $product->promotions = $productInfo['promotions'];
-        $product->attachments = $productInfo['attachments'];
+        $product->options = $this->getAttribute('options', $productInfo, array());
+        $product->promotions = $this->getAttribute('promotions', $productInfo, array());
+        $product->attachments = $this->getAttribute('attachments', $productInfo, array());
 
-        $product->commission = $productInfo['commission'];
-        $product->commissioning = $productInfo['commissioning'];
-        $product->order_preferences = $productInfo['order_preferences'];
-        $product->price = $productInfo['price'];
+        $product->commission = $this->getAttribute('commission', $productInfo, array());
+        $product->commissioning = $this->getAttribute('commissioning', $productInfo, array());
+        $product->order_preferences = $this->getAttribute('order_preferences', $productInfo, array());
+        $product->price = $this->getAttribute('price', $productInfo, array());
 
         return $product;
+    }
+
+    protected function createSupplier($productInfo)
+    {
+        $supplierFactory = new SupplierFactory();
+
+        return $supplierFactory->createSupplier( $productInfo['supplier'] );
     }
 
 }
