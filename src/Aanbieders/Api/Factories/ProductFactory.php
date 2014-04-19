@@ -41,7 +41,7 @@ class ProductFactory extends BaseFactory {
         $product->reviews = $this->getAttribute('reviews', $productInfo, array());
 
         $product->options = $this->getAttribute('options', $productInfo, array());
-        $product->promotions = $this->getAttribute('promotions', $productInfo, array());
+        $product->promotions = $this->createPromotions($productInfo);
         $product->attachments = $this->getAttribute('attachments', $productInfo, array());
 
         $product->commission = $this->getAttribute('commission', $productInfo, array());
@@ -57,6 +57,13 @@ class ProductFactory extends BaseFactory {
         $supplierFactory = new SupplierFactory();
 
         return $supplierFactory->createSupplier( $productInfo['supplier'] );
+    }
+
+    protected function createPromotions($productInfo)
+    {
+        $promotionFactory = new PromotionFactory();
+
+        return $promotionFactory->createPromotions( $productInfo['promotions'] );
     }
 
 }
