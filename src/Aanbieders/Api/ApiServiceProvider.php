@@ -11,6 +11,7 @@ class ApiServiceProvider extends ServiceProvider {
      */
     protected $defer = false;
 
+
     /**
      * @return void
      */
@@ -30,18 +31,22 @@ class ApiServiceProvider extends ServiceProvider {
 
     protected function registerProductServiceProvider()
     {
-        $this->app['aanbieders.api.product'] = $this->app->share(function($app)
-        {
-            return new ProductServiceProvider();
-        });
+        $this->app['Api.product'] = $this->app->share(
+            function($app)
+            {
+                return new ProductServiceProvider();
+            }
+        );
     }
 
     protected function registerApiService()
     {
-        $this->app['AanbiedersAPI'] = $this->app->share(function($app)
-        {
-            return new ApiService( $app['aanbieders.api.product'] );
-        });
+        $this->app['Api'] = $this->app->share(
+            function($app)
+            {
+                return new ApiService( $app['Api.product'] );
+            }
+        );
     }
 
     /**
@@ -49,7 +54,7 @@ class ApiServiceProvider extends ServiceProvider {
      */
     public function provides()
     {
-        return array('AanbiedersAPI');
+        return array('Api');
     }
 
 }

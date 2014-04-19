@@ -15,14 +15,15 @@
 
     "require": {
         "php": ">=5.3.0",
-        "illuminate/support": "4.1.*"
+        "everto/aanbieders-api-client": "dev-master",
+        "ixudra/curl": "dev-master"
     },
 
     "autoload": {
         "classmap": [
             "src/migrations"
         ],
-        
+
         "psr-0": {
             "Aanbieders\\Api\\": "src/"
         }

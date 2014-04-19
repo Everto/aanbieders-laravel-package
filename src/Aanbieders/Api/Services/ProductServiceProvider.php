@@ -2,9 +2,8 @@
 
 
 use Aanbieders\Api\Factories\ProductFactory;
-use Aanbieders\Api\Models\Product;
 
-class ProductServiceProvider {
+class ProductServiceProvider extends ApiServiceProvider {
 
     public function __construct(ProductFactory $productFactory = null)
     {
@@ -16,26 +15,34 @@ class ProductServiceProvider {
     }
 
 
-    public function getProducts()
+    public function getProducts($category, $segment = 'consumer', $language = 'nl', $productIds = array())
     {
-        // ToDo: Create request
-        $response = null;
+        $response = $this->getApiClient()->getProducts(
+            array(
+                'cat'       => $category,
+                'sg'        => $segment,
+                'lang'      => $language
+            ), $productIds
+        );
 
-        // ToDo: Create request
         $products = $this->productFactory->createProducts( $response );
 
         return $products;
     }
 
-    public function getProduct()
+    public function getProduct($category, $segment = 'consumer', $language = 'nl', $productId)
     {
-        // ToDo: Create request
-        $response = null;
+        $response = $this->getApiClient()->getProducts(
+            array(
+                'cat'       => $category,
+                'sg'        => $segment,
+                'lang'      => $language
+            ), $productId
+        );
 
-        // ToDo: Create request
-        $product = $this->productFactory->createProducts( $response );
+        $products = $this->productFactory->createProducts( $response );
 
-        return $product;
+        return $products[0];
     }
 
 }

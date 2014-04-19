@@ -4,19 +4,38 @@
 class Product extends BaseModel {
 
     protected $attributes = array(
-        'id'                => '',
-        'review'            => '',
-        'timestamp'         => '',
-        'ip'                => '',
-        'customerId'        => '',
-        'websiteId'         => '',
-        'productId'         => '',
-        'language'          => '',
-        'isPusblished'      => '',
-        'score'             => '',
-        'txtName'           => '',
-        'txtEmail'          => '',
-        'isDeleted'         => ''
+        'type'                      => '',
+        'id'                        => '',
+        'name'                      => '',
+
+        'group_id'                  => '',
+        'segment'                   => '',
+        'updated'                   => '',
+
+        'supplier'                  => array(),
+        'supplier_id'               => '',
+        'supplier_name'             => '',
+
+        'status'                    => '',
+        'status_code'               => '',
+
+        'monthly_fee'               => array(),
+        'contract_periods'          => '',
+        'availability'              => array(),
+
+        'specifications'            => array(),
+        'texts'                     => array(),
+        'links'                     => array(),
+        'reviews'                   => array(),
+
+        'options'                   => array(),
+        'promotions'                => array(),
+        'attachments'               => array(),
+
+        'commission'                => '',
+        'commissioning'             => array(),
+        'order_preferences'         => array(),
+        'price'                     => array()
     );
 
 

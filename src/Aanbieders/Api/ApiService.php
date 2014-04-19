@@ -14,14 +14,14 @@ class ApiService {
     }
 
 
-    public function getProducts()
+    public function getProducts($category, $segment = 'consumer', $language = 'nl', $productIds = array())
     {
-        return $this->productServiceProvider->getProducts();
+        return $this->productServiceProvider->getProducts($category, $segment, $language, $productIds);
     }
 
-    public function getProduct()
+    public function getProduct($category, $segment = 'consumer', $language = 'nl', $productId)
     {
-        return $this->productServiceProvider->getProduct();
+        return $this->productServiceProvider->getProduct($category, $segment, $language, $productId);
     }
 
 }
