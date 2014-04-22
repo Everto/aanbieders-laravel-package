@@ -25,7 +25,7 @@ class BaseServiceProvider {
                 )
             );
 
-            $this->apiClient->setOutputType('array');
+            $this->apiClient->setOutputType('object');
         }
 
         return $this->apiClient;
