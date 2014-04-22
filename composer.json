@@ -2,7 +2,7 @@
     "name": "aanbieders/api",
     "description": "Package to recover information of the Aanbieders.be backend using the Aanbieders API",
     "version": "0.0.1",
-    "keywords": ["Ixudra", "Laravel", "Aanbieders", "API"],
+    "keywords": ["Laravel", "Aanbieders", "API"],
     "homepage": "http://aanbieders.be",
     "license": "MIT",
 
@@ -15,8 +15,7 @@
 
     "require": {
         "php": ">=5.3.0",
-        "everto/aanbieders-api-client": "dev-master",
-        "ixudra/curl": "dev-master"
+        "everto/aanbieders-api-client": "dev-master"
     },
 
     "autoload": {
