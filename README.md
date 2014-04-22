@@ -2,7 +2,7 @@
 
 This package offers the Laravel integration of the Aanbieders.be comparison collection API. This API can be used by partners and affiliates of Aanbieders to leverage information from the Aanbieders comparison calculation engine on their personal websites.
 
-In order to use the API (and thus this package), an API key is required. If you are in need of such a key, please get in touch with Aanbieders.be via [https://www.aanbieders.be/contact](their website).
+In order to use the API (and thus this package), an API key is required. If you are in need of such a key, please get in touch with Aanbieders.be via [their website](https://www.aanbieders.be/contact).
 
 
 
@@ -59,6 +59,6 @@ $comparisons = Api::getComparisons(
 );
 ```
 
-For information regarding all possible parameters and their properties, we kindly refer you to [http://apihelp.econtract.be/](The API documentation).
+For information regarding all possible parameters and their properties, we kindly refer you to [the API documentation](http://apihelp.econtract.be/).
 
 
