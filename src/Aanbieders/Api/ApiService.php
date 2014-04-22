@@ -3,6 +3,7 @@
 
 use Aanbieders\Api\Services\ProductServiceProvider;
 use Aanbieders\Api\Services\SupplierServiceProvider;
+use Aanbieders\Api\Services\ComparisonServiceProvider;
 
 class ApiService {
 
@@ -10,11 +11,14 @@ class ApiService {
 
     protected $supplierServiceProvider = null;
 
+    protected $comparisonServiceProvider = null;
 
-    public function __construct(ProductServiceProvider $productServiceProvider, SupplierServiceProvider $supplierServiceProvider)
+
+    public function __construct(ProductServiceProvider $productServiceProvider, SupplierServiceProvider $supplierServiceProvider, ComparisonServiceProvider $comparisonServiceProvider)
     {
         $this->productServiceProvider = $productServiceProvider;
         $this->supplierServiceProvider = $supplierServiceProvider;
+        $this->comparisonServiceProvider = $comparisonServiceProvider;
     }
 
 
@@ -37,6 +41,12 @@ class ApiService {
     public function getSupplier($category, $segment = 'consumer', $language = 'nl', $productId)
     {
         return $this->supplierServiceProvider->getSupplier($category, $segment, $language, $productId);
+    }
+
+
+    public function getComparisons($params = array())
+    {
+        return $this->comparisonServiceProvider->getComparisons($params);
     }
 
 }

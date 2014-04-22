@@ -1,6 +1,7 @@
 <?php namespace Aanbieders\Api;
 
 
+use Aanbieders\Api\Services\ComparisonServiceProvider;
 use Aanbieders\Api\Services\ProductServiceProvider;
 use Aanbieders\Api\Services\SupplierServiceProvider;
 use Illuminate\Support\ServiceProvider;
@@ -28,6 +29,7 @@ class ApiServiceProvider extends ServiceProvider {
     {
         $this->registerProductServiceProvider();
         $this->registerSupplierServiceProvider();
+        $this->registerComparisonServiceProvider();
         $this->registerApiService();
     }
 
@@ -51,6 +53,16 @@ class ApiServiceProvider extends ServiceProvider {
         );
     }
 
+    protected function registerComparisonServiceProvider()
+    {
+        $this->app['Api.comparison'] = $this->app->share(
+            function($app)
+            {
+                return new ComparisonServiceProvider();
+            }
+        );
+    }
+
     protected function registerApiService()
     {
         $this->app['Api'] = $this->app->share(
@@ -58,7 +70,8 @@ class ApiServiceProvider extends ServiceProvider {
             {
                 return new ApiService(
                     $app['Api.product'],
-                    $app['Api.supplier']
+                    $app['Api.supplier'],
+                    $app['Api.comparison']
                 );
             }
         );
