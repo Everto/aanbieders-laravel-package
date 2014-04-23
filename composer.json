@@ -1,15 +1,19 @@
 {
-    "name": "aanbieders/api",
-    "description": "Package to recover information of the Aanbieders.be backend using the Aanbieders API",
+    "name": "aanbieders/laravel-api",
+    "description": "Laravel package to recover information of the Aanbieders.be Comparison service provider, using the Aanbieders API",
     "version": "0.0.1",
     "keywords": ["Laravel", "Aanbieders", "API"],
-    "homepage": "http://aanbieders.be",
+    "homepage": "http://www.aanbieders.be",
     "license": "MIT",
 
     "authors": [
         {
             "name": "Jan Oris",
             "email": "jan.oris@ixudra.be"
+        },
+        {
+            "name": "Evert Engelen",
+            "email": "evert@aanbieders.be"
         }
     ],
 
