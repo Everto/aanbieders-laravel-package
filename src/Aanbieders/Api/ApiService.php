@@ -22,29 +22,29 @@ class ApiService {
     }
 
 
-    public function getProducts($category, $segment = 'consumer', $language = 'nl', $productIds = array())
+    public function getProducts($params, $productIds = array())
     {
-        return $this->productServiceProvider->getProducts($category, $segment, $language, $productIds);
+        return $this->productServiceProvider->getProducts( $params, $productIds );
     }
 
-    public function getProduct($category, $segment = 'consumer', $language = 'nl', $productId)
+    public function getProduct($params, $productId)
     {
-        return $this->productServiceProvider->getProduct($category, $segment, $language, $productId);
-    }
-
-
-    public function getSuppliers($category, $segment = 'consumer', $language = 'nl', $productIds = array())
-    {
-        return $this->supplierServiceProvider->getSuppliers($category, $segment, $language, $productIds);
-    }
-
-    public function getSupplier($category, $segment = 'consumer', $language = 'nl', $productId)
-    {
-        return $this->supplierServiceProvider->getSupplier($category, $segment, $language, $productId);
+        return $this->productServiceProvider->getProduct( $params, $productId );
     }
 
 
-    public function getComparisons($params = array())
+    public function getSuppliers($params, $productIds = array())
+    {
+        return $this->supplierServiceProvider->getSuppliers( $params, $productIds );
+    }
+
+    public function getSupplier($params, $productId)
+    {
+        return $this->supplierServiceProvider->getSupplier( $params, $productId );
+    }
+
+
+    public function getComparisons($params)
     {
         return $this->comparisonServiceProvider->getComparisons($params);
     }

@@ -9,28 +9,16 @@ class ProductServiceProvider extends BaseServiceProvider {
     }
 
 
-    public function getProducts($category, $segment = 'consumer', $language = 'nl', $productIds = array())
+    public function getProducts($params, $productIds = array())
     {
-        $products = $this->getApiClient()->getProducts(
-            array(
-                'cat'       => $category,
-                'sg'        => $segment,
-                'lang'      => $language
-            ), $productIds
-        );
+        $products = $this->getApiClient()->getProducts( $params, $productIds );
 
         return $products;
     }
 
-    public function getProduct($category, $segment = 'consumer', $language = 'nl', $productId)
+    public function getProduct($params, $productId)
     {
-        $products = $this->getApiClient()->getProducts(
-            array(
-                'cat'       => $category,
-                'sg'        => $segment,
-                'lang'      => $language
-            ), $productId
-        );
+        $products = $this->getApiClient()->getProducts( $params, $productId );
 
         return $products[0];
     }

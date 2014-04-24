@@ -9,28 +9,16 @@ class SupplierServiceProvider extends BaseServiceProvider {
     }
 
 
-    public function getSuppliers($category, $segment = 'consumer', $language = 'nl', $supplierIds = array())
+    public function getSuppliers($params, $supplierIds = array())
     {
-        $suppliers = $this->getApiClient()->getSuppliers(
-            array(
-                'cat'       => $category,
-                'sg'        => $segment,
-                'lang'      => $language
-            ), $supplierIds
-        );
+        $suppliers = $this->getApiClient()->getSuppliers( $params, $supplierIds );
 
         return $suppliers;
     }
 
-    public function getSupplier($category, $segment = 'consumer', $language = 'nl', $supplierId)
+    public function getSupplier($params, $supplierId)
     {
-        $suppliers = $this->getApiClient()->getSuppliers(
-            array(
-                'cat'       => $category,
-                'sg'        => $segment,
-                'lang'      => $language
-            ), $supplierId
-        );
+        $suppliers = $this->getApiClient()->getSuppliers( $params, $supplierId );
 
         return $suppliers[0];
     }

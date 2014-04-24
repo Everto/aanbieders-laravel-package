@@ -41,15 +41,27 @@ Add the API as an alias to your app.php file
 Once this is done, you can access the API using the alias you have selected in you app.php file:
 
 ```php
-$products = Api::getProducts('internet', 'consumer', 'nl');
+$products = Api::getProducts(
+    array(
+        'sg'        => 'consumer',
+        'cat'       => 'internet',
+        'lang'      => 'nl'
+    )
+);
 
-$suppliers = Api::getSuppliers('internet', 'consumer', 'nl');
+suppliers = Api::getSuppliers(
+    array(
+        'sg'        => 'consumer',
+        'cat'       => 'internet',
+        'lang'      => 'nl'
+    )
+);
 
 $comparisons = Api::getComparisons(
     array(
         'sg'        => 'consumer',
-        'lang'      => 'nl',
         'cat'       => 'gas',
+        'lang'      => 'nl',
         'u'         => '4000',
         'ut'        => 'kwh',
         'zip'       => '3540',
