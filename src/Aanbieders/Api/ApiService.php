@@ -1,9 +1,7 @@
 <?php namespace Aanbieders\Api;
 
 
-use Aanbieders\Api\Services\ProductServiceProvider;
-use Aanbieders\Api\Services\SupplierServiceProvider;
-use Aanbieders\Api\Services\ComparisonServiceProvider;
+use Aanbieders\Api\Exceptions\AanbiedersApiException;
 
 class ApiService {
 
@@ -14,7 +12,7 @@ class ApiService {
     protected $comparisonServiceProvider = null;
 
 
-    public function __construct(ProductServiceProvider $productServiceProvider, SupplierServiceProvider $supplierServiceProvider, ComparisonServiceProvider $comparisonServiceProvider)
+    public function __construct($productServiceProvider, $supplierServiceProvider, $comparisonServiceProvider)
     {
         $this->productServiceProvider = $productServiceProvider;
         $this->supplierServiceProvider = $supplierServiceProvider;
@@ -24,29 +22,52 @@ class ApiService {
 
     public function getProducts($params, $productIds = array())
     {
-        return $this->productServiceProvider->getProducts( $params, $productIds );
+        return $this->returnIfSuccessful(
+            $this->productServiceProvider->getProducts( $params, $productIds )
+        );
     }
 
     public function getProduct($params, $productId)
     {
-        return $this->productServiceProvider->getProduct( $params, $productId );
+        return $this->returnIfSuccessful(
+            $this->productServiceProvider->getProduct( $params, $productId )
+        );
     }
 
 
     public function getSuppliers($params, $productIds = array())
     {
-        return $this->supplierServiceProvider->getSuppliers( $params, $productIds );
+        return $this->returnIfSuccessful(
+            $this->supplierServiceProvider->getSuppliers( $params, $productIds )
+        );
     }
 
     public function getSupplier($params, $productId)
     {
-        return $this->supplierServiceProvider->getSupplier( $params, $productId );
+        return $this->returnIfSuccessful(
+            $this->supplierServiceProvider->getSupplier( $params, $productId )
+        );
     }
 
 
     public function getComparisons($params)
     {
-        return $this->comparisonServiceProvider->getComparisons($params);
+        return $this->returnIfSuccessful(
+            $this->comparisonServiceProvider->getComparisons($params)
+        );
+    }
+
+    protected function returnIfSuccessful($response)
+    {
+        if( is_null($response) ) {
+            throw new AanbiedersApiException('Api error : something went wrong while recovering information via the API. Check your parameters for typos or other mistakes.');
+        }
+
+        if( !is_array($response) && strpos( $response , 'Api error' ) !== false ) {
+            throw new AanbiedersApiException($response);
+        }
+
+        return $response;
     }
 
 }
