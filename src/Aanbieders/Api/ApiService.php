@@ -59,15 +59,15 @@ class ApiService {
 
     protected function returnIfSuccessful($response)
     {
+        if( is_array($response) || is_object($response) ) {
+            return $response;
+        }
+
         if( is_null($response) ) {
-            throw new AanbiedersApiException('Api error : something went wrong while recovering information via the API. Check your parameters for typos or other mistakes.');
+            $response = 'Api error : something went wrong while recovering information via the API. Check your parameters for typos or other mistakes.';
         }
 
-        if( !is_array($response) && strpos( $response , 'Api error' ) !== false ) {
-            throw new AanbiedersApiException($response);
-        }
-
-        return $response;
+        throw new AanbiedersApiException($response);
     }
 
 }
