@@ -59,15 +59,15 @@ class ApiService {
 
     protected function returnIfSuccessful($response)
     {
-        if( is_array($response) || is_object($response) ) {
-            return $response;
-        }
-
-        if( is_null($response) ) {
+        if( is_array($response) || is_object($response) || $response === '' || is_null($response) ) {
             $response = 'Api error : something went wrong while recovering information via the API. Check your parameters for typos or other mistakes.';
         }
 
-        throw new AanbiedersApiException($response);
+        if( strpos($response, 'Api error') !== false || strpos($response, 'is required') !== false ) {
+            throw new AanbiedersApiException($response);
+        }
+
+        return $response;
     }
 
 }

@@ -31,9 +31,7 @@ class ApiServiceTest extends \PHPUnit_Framework_TestCase {
      */
     public function testGetProducts()
     {
-        $expectedResult = array(
-            'Foo'       => 'Bar'
-        );
+        $expectedResult = '[{"producttype":"internet","product_id":"8"},{"producttype":"internet","product_id":"27"}]';
 
         $productServiceProviderMock = Mockery::mock('ProductServiceProvider');
         $productServiceProviderMock->shouldReceive('getProducts')->once()->with( $this->params, array() )->andReturn($expectedResult);
@@ -48,11 +46,9 @@ class ApiServiceTest extends \PHPUnit_Framework_TestCase {
      */
     public function testGetProducts_limitsToProductIdsIfProvided()
     {
-        $productIds = array( 15, 23, 46, 89 );
+        $productIds = array( 8, 27 );
 
-        $expectedResult = array(
-            'Foo'       => 'Bar'
-        );
+        $expectedResult = '[{"producttype":"internet","product_id":"8"},{"producttype":"internet","product_id":"27"}]';
 
         $productServiceProviderMock = Mockery::mock('ProductServiceProvider');
         $productServiceProviderMock->shouldReceive('getProducts')->once()->with( $this->params, $productIds )->andReturn($expectedResult);
@@ -80,10 +76,10 @@ class ApiServiceTest extends \PHPUnit_Framework_TestCase {
      * @covers ApiService::returnIfSuccessful()
      * @expectedException Aanbieders\Api\Exceptions\AanbiedersApiException
      */
-    public function testGetProducts_throwsExceptionIfApiReturnsNull()
+    public function testGetProducts_throwsExceptionIfApiReturnsEmptyString()
     {
         $productServiceProviderMock = Mockery::mock('ProductServiceProvider');
-        $productServiceProviderMock->shouldReceive('getProducts')->once()->with( $this->params, array() )->andReturn(null);
+        $productServiceProviderMock->shouldReceive('getProducts')->once()->with( $this->params, array() )->andReturn('');
         $apiService = $this->createApiService($productServiceProviderMock, null, null);
 
         $apiService->getProducts( $this->params );
@@ -96,7 +92,7 @@ class ApiServiceTest extends \PHPUnit_Framework_TestCase {
      */
     public function testGetProduct()
     {
-        $expectedResult = new \stdClass();
+        $expectedResult = '{"producttype":"internet","product_id":"8"}';
 
         $productServiceProviderMock = Mockery::mock('ProductServiceProvider');
         $productServiceProviderMock->shouldReceive('getProduct')->once()->with( $this->params, self::PRODUCT_ID )->andReturn($expectedResult);
@@ -124,10 +120,10 @@ class ApiServiceTest extends \PHPUnit_Framework_TestCase {
      * @covers ApiService::returnIfSuccessful()
      * @expectedException Aanbieders\Api\Exceptions\AanbiedersApiException
      */
-    public function testGetProduct_throwsExceptionIfApiReturnsNull()
+    public function testGetProduct_throwsExceptionIfApiReturnsEmptyString()
     {
         $productServiceProviderMock = Mockery::mock('ProductServiceProvider');
-        $productServiceProviderMock->shouldReceive('getProduct')->once()->with( $this->params, self::PRODUCT_ID )->andReturn(null);
+        $productServiceProviderMock->shouldReceive('getProduct')->once()->with( $this->params, self::PRODUCT_ID )->andReturn('');
         $apiService = $this->createApiService($productServiceProviderMock, null, null);
 
         $apiService->getProduct( $this->params, self::PRODUCT_ID );
@@ -140,9 +136,7 @@ class ApiServiceTest extends \PHPUnit_Framework_TestCase {
      */
     public function testGetSuppliers()
     {
-        $expectedResult = array(
-            'Foo'       => 'Bar'
-        );
+        $expectedResult = '[{"supplier_id":"8","name":"Foo"},{"supplier_id":"27","name":"Bar"}]';
 
         $supplierServiceProviderMock = Mockery::mock('SupplierServiceProvider');
         $supplierServiceProviderMock->shouldReceive('getSuppliers')->once()->with( $this->params, array() )->andReturn($expectedResult);
@@ -157,11 +151,9 @@ class ApiServiceTest extends \PHPUnit_Framework_TestCase {
      */
     public function testGetSuppliers_limitsToSupplierIdsIfProvided()
     {
-        $supplierIds = array( 15, 23, 46, 89 );
+        $supplierIds = array( 8, 27 );
 
-        $expectedResult = array(
-            'Foo'       => 'Bar'
-        );
+        $expectedResult = '[{"supplier_id":"8","name":"Foo"},{"supplier_id":"27","name":"Bar"}]';
 
         $supplierServiceProviderMock = Mockery::mock('SupplierServiceProvider');
         $supplierServiceProviderMock->shouldReceive('getSuppliers')->once()->with( $this->params, $supplierIds )->andReturn($expectedResult);
@@ -189,10 +181,10 @@ class ApiServiceTest extends \PHPUnit_Framework_TestCase {
      * @covers ApiService::returnIfSuccessful()
      * @expectedException Aanbieders\Api\Exceptions\AanbiedersApiException
      */
-    public function testGetSuppliers_throwsExceptionIfApiReturnsNull()
+    public function testGetSuppliers_throwsExceptionIfApiReturnsEmptyString()
     {
         $supplierServiceProviderMock = Mockery::mock('SupplierServiceProvider');
-        $supplierServiceProviderMock->shouldReceive('getSuppliers')->once()->with( $this->params, array() )->andReturn(null);
+        $supplierServiceProviderMock->shouldReceive('getSuppliers')->once()->with( $this->params, array() )->andReturn('');
         $apiService = $this->createApiService(null, $supplierServiceProviderMock, null);
 
         $apiService->getSuppliers( $this->params );
@@ -205,7 +197,7 @@ class ApiServiceTest extends \PHPUnit_Framework_TestCase {
      */
     public function testGetSupplier()
     {
-        $expectedResult = new \stdClass();
+        $expectedResult = '{"supplier_id":"36","name":"Belcenter"}';
 
         $supplierServiceProviderMock = Mockery::mock('SupplierServiceProvider');
         $supplierServiceProviderMock->shouldReceive('getSupplier')->once()->with( $this->params, self::SUPPLIER_ID )->andReturn($expectedResult);
@@ -233,10 +225,10 @@ class ApiServiceTest extends \PHPUnit_Framework_TestCase {
      * @covers ApiService::returnIfSuccessful()
      * @expectedException Aanbieders\Api\Exceptions\AanbiedersApiException
      */
-    public function testGetSupplier_throwsExceptionIfApiReturnsNull()
+    public function testGetSupplier_throwsExceptionIfApiReturnsEmptyString()
     {
         $supplierServiceProviderMock = Mockery::mock('SupplierServiceProvider');
-        $supplierServiceProviderMock->shouldReceive('getSupplier')->once()->with( $this->params, self::SUPPLIER_ID )->andReturn(null);
+        $supplierServiceProviderMock->shouldReceive('getSupplier')->once()->with( $this->params, self::SUPPLIER_ID )->andReturn('');
         $apiService = $this->createApiService(null, $supplierServiceProviderMock, null);
 
         $apiService->getSupplier( $this->params, self::SUPPLIER_ID );
@@ -249,9 +241,7 @@ class ApiServiceTest extends \PHPUnit_Framework_TestCase {
      */
     public function testGetComparisons()
     {
-        $expectedResult = array(
-            'Foo'       => 'Bar'
-        );
+        $expectedResult = '{"num_results":2,"comparison_id":21259054,"results":[{"product":{"producttype":"gas","product_id":"56"}}, {"product":{"producttype":"gas","product_id":"84"}}]}';
 
         $comparisonsServiceProviderMock = Mockery::mock('ComparisonServiceProvider');
         $comparisonsServiceProviderMock->shouldReceive('getComparisons')->once()->with( $this->params )->andReturn($expectedResult);
@@ -279,10 +269,38 @@ class ApiServiceTest extends \PHPUnit_Framework_TestCase {
      * @covers ApiService::returnIfSuccessful()
      * @expectedException Aanbieders\Api\Exceptions\AanbiedersApiException
      */
-    public function testGetComparisons_throwsExceptionIfApiReturnsNull()
+    public function testGetComparisons_throwsExceptionIfApiReturnsEmptyString()
     {
         $comparisonsServiceProviderMock = Mockery::mock('ComparisonServiceProvider');
-        $comparisonsServiceProviderMock->shouldReceive('getComparisons')->once()->with( $this->params )->andReturn(null);
+        $comparisonsServiceProviderMock->shouldReceive('getComparisons')->once()->with( $this->params )->andReturn('');
+        $apiService = $this->createApiService(null, null, $comparisonsServiceProviderMock);
+
+        $apiService->getComparisons( $this->params );
+    }
+
+    /**
+     * @covers ApiService::getComparisons()
+     * @covers ApiService::returnIfSuccessful()
+     * @expectedException Aanbieders\Api\Exceptions\AanbiedersApiException
+     */
+    public function testGetComparisons_throwsExceptionIfApiReturnsMissingParameterError()
+    {
+        $comparisonsServiceProviderMock = Mockery::mock('ComparisonServiceProvider');
+        $comparisonsServiceProviderMock->shouldReceive('getComparisons')->once()->with( $this->params )->andReturn( '"Not all required parameters are set : Parameter \'sg\' is required"' );
+        $apiService = $this->createApiService(null, null, $comparisonsServiceProviderMock);
+
+        $apiService->getComparisons( $this->params );
+    }
+
+    /**
+     * @covers ApiService::getComparisons()
+     * @covers ApiService::returnIfSuccessful()
+     * @expectedException Aanbieders\Api\Exceptions\AanbiedersApiException
+     */
+    public function testGetComparisons_throwsExceptionIfApiReturnsArrayOfMissingParameterErrors()
+    {
+        $comparisonsServiceProviderMock = Mockery::mock('ComparisonServiceProvider');
+        $comparisonsServiceProviderMock->shouldReceive('getComparisons')->once()->with( $this->params )->andReturn( '["u is required (invalid numeric value)","zip is required (invalid zipcode value)"]' );
         $apiService = $this->createApiService(null, null, $comparisonsServiceProviderMock);
 
         $apiService->getComparisons( $this->params );

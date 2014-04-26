@@ -20,7 +20,7 @@ class ProductServiceProvider extends BaseServiceProvider {
     {
         $products = $this->getApiClient()->getProducts( $params, $productId );
 
-        return $products[0];
+        return substr($products, 1, -1);
     }
 
 }

@@ -22,7 +22,6 @@ class BaseServiceProvider {
                     'staging'       => $_SERVER['API_staging']
                 )
             );
-
         }
 
         return $this->apiClient;
