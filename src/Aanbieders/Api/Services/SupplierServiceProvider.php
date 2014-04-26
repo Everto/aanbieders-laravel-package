@@ -20,7 +20,7 @@ class SupplierServiceProvider extends BaseServiceProvider {
     {
         $suppliers = $this->getApiClient()->getSuppliers( $params, $supplierId );
 
-        return $suppliers[0];
+        return substr($suppliers, 1, -1);
     }
 
 }
