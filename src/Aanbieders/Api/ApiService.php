@@ -89,6 +89,13 @@ class ApiService {
         );
     }
 
+    public function updateClient($id, $attributes)
+    {
+        return $this->returnCrmResponse(
+            $this->clientServiceProvider->updateClient($id, $attributes)
+        );
+    }
+
 
     public function getOrder($id)
     {
@@ -104,6 +111,13 @@ class ApiService {
         );
     }
 
+    public function updateOrder($id, $attributes)
+    {
+        return $this->returnCrmResponse(
+            $this->orderServiceProvider->updateOrder($id, $attributes)
+        );
+    }
+
 
     public function getContract($id)
     {
@@ -116,6 +130,13 @@ class ApiService {
     {
         return $this->returnCrmResponse(
             $this->contractServiceProvider->createContract($attributes)
+        );
+    }
+
+    public function updateContract($id, $attributes)
+    {
+        return $this->returnCrmResponse(
+            $this->orderServiceProvider->updateContract($id, $attributes)
         );
     }
 

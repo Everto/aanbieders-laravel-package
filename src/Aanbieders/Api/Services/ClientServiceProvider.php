@@ -1,47 +1,13 @@
 <?php namespace Aanbieders\Api\Services;
 
 
-use Ixudra\Curl\CurlService;
-
 class ClientServiceProvider extends BaseServiceProvider {
-
-    protected $curlService;
-
 
     public function __construct()
     {
-        //
-    }
+        parent::__construct();
 
-
-    public function getClient($id)
-    {
-        return $this->getCurlService()->get( $this->getCrmBaseUrl(). '/clients/'. $id );
-    }
-
-    public function searchClient($query)
-    {
-        return $this->getCurlService()->post( $this->getCrmBaseUrl(). '/clients/search', array( 'query' => $query ) );
-    }
-
-    public function createClient($attributes = array())
-    {
-        return $this->getCurlService()->post( $this->getCrmBaseUrl(). '/clients', $this->addDefaultAttributes( $attributes ) );
-    }
-
-
-    protected function getCurlService()
-    {
-        if( is_null($this->curlService) ) {
-            $this->curlService = new CurlService();
-        }
-
-        return $this->curlService;
-    }
-
-    protected function addDefaultAttributes($attributes)
-    {
-        $defaults = array(
+        $this->defaults = array(
             'gender'            => 0,
             'segment'           => 0,
             'first_name'        => '',
@@ -61,10 +27,34 @@ class ClientServiceProvider extends BaseServiceProvider {
             'client_id'         => 0,
             'bban'              => '',
             'iban'              => '',
-            'bic'               => '',
+            'bic'               => ''
         );
 
-        return array_merge( $defaults, $attributes );
+        $this->guards = array(
+            'user_id',
+            'client_id'
+        );
+    }
+
+
+    public function getClient($id)
+    {
+        return $this->getCurlService()->get( $this->getCrmBaseUrl(). '/clients/'. $id );
+    }
+
+    public function searchClient($query)
+    {
+        return $this->getCurlService()->post( $this->getCrmBaseUrl(). '/clients/search', array( 'query' => $query ) );
+    }
+
+    public function createClient($attributes = array())
+    {
+        return $this->getCurlService()->post( $this->getCrmBaseUrl(). '/clients', $this->addDefaultAttributes( $attributes ) );
+    }
+
+    public function updateClient($id, $attributes = array())
+    {
+        return $this->getCurlService()->post( $this->getCrmBaseUrl(). '/clients/'. $id, $this->filterImmutableAttributes( $attributes ) );
     }
 
 }
