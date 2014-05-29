@@ -1,9 +1,12 @@
 <?php namespace Aanbieders\Api;
 
 
-use Aanbieders\Api\Services\ComparisonServiceProvider;
 use Aanbieders\Api\Services\ProductServiceProvider;
 use Aanbieders\Api\Services\SupplierServiceProvider;
+use Aanbieders\Api\Services\ComparisonServiceProvider;
+use Aanbieders\Api\Services\OrderServiceProvider;
+use Aanbieders\Api\Services\ClientServiceProvider;
+use Aanbieders\Api\Services\ContractServiceProvider;
 use Illuminate\Support\ServiceProvider;
 
 class ApiServiceProvider extends ServiceProvider {
@@ -30,6 +33,9 @@ class ApiServiceProvider extends ServiceProvider {
         $this->registerProductServiceProvider();
         $this->registerSupplierServiceProvider();
         $this->registerComparisonServiceProvider();
+        $this->registerOrderServiceProvider();
+        $this->registerClientServiceProvider();
+        $this->registerContractServiceProvider();
         $this->registerApiService();
     }
 
@@ -63,6 +69,36 @@ class ApiServiceProvider extends ServiceProvider {
         );
     }
 
+    protected function registerOrderServiceProvider()
+    {
+        $this->app['Api.order'] = $this->app->share(
+            function($app)
+            {
+                return new OrderServiceProvider();
+            }
+        );
+    }
+
+    protected function registerClientServiceProvider()
+    {
+        $this->app['Api.client'] = $this->app->share(
+            function($app)
+            {
+                return new ClientServiceProvider();
+            }
+        );
+    }
+
+    protected function registerContractServiceProvider()
+    {
+        $this->app['Api.contract'] = $this->app->share(
+            function($app)
+            {
+                return new ContractServiceProvider();
+            }
+        );
+    }
+
     protected function registerApiService()
     {
         $this->app['Api'] = $this->app->share(
@@ -71,7 +107,10 @@ class ApiServiceProvider extends ServiceProvider {
                 return new ApiService(
                     $app['Api.product'],
                     $app['Api.supplier'],
-                    $app['Api.comparison']
+                    $app['Api.comparison'],
+                    $app['Api.client'],
+                    $app['Api.order'],
+                    $app['Api.contract']
                 );
             }
         );

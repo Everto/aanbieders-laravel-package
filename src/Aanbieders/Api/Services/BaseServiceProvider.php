@@ -27,4 +27,9 @@ class BaseServiceProvider {
         return $this->apiClient;
     }
 
+    protected function getCrmBaseUrl()
+    {
+        return 'aanbieders.dev/api';
+    }
+
 }
