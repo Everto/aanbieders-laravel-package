@@ -1,9 +1,23 @@
 <?php namespace Aanbieders\Api;
 
 
+use Illuminate\Config\Repository as Config;
+use Illuminate\Config\FileLoader;
+use Illuminate\Filesystem\Filesystem;
+
+use Aanbieders\Api\Services\ProductServiceProvider;
+use Aanbieders\Api\Services\SupplierServiceProvider;
+use Aanbieders\Api\Services\ComparisonServiceProvider;
+
+use Aanbieders\Api\Services\ClientServiceProvider;
+use Aanbieders\Api\Services\OrderServiceProvider;
+use Aanbieders\Api\Services\ContractServiceProvider;
+
 use Aanbieders\Api\Exceptions\AanbiedersApiException;
 
 class ApiService {
+
+    protected $config = null;
 
     protected $productServiceProvider = null;
 
@@ -18,8 +32,20 @@ class ApiService {
     protected $contractServiceProvider = null;
 
 
-    public function __construct($productServiceProvider, $supplierServiceProvider, $comparisonServiceProvider, $clientServiceProvider, $orderServiceProvider, $contractServiceProvider)
+    public function __construct(Config $config = null, $productServiceProvider = null, $supplierServiceProvider = null, $comparisonServiceProvider = null, $clientServiceProvider = null, $orderServiceProvider = null, $contractServiceProvider = null)
     {
+        if( is_a($config, '\Illuminate\Config\Repository') ) {
+            $this->config = $config;
+        } else {
+            $config_path = __DIR__. '/../../config';
+            $env = 'production';
+
+            $file = new Filesystem();
+            $loader = new FileLoader( $file, $config_path );
+            $this->config = new Config( $loader, $env );
+            $this->config->package( 'aanbieders/api', $config_path, 'Api' );
+        }
+
         $this->productServiceProvider = $productServiceProvider;
         $this->supplierServiceProvider = $supplierServiceProvider;
         $this->comparisonServiceProvider = $comparisonServiceProvider;
@@ -33,14 +59,14 @@ class ApiService {
     public function getProducts($params, $productIds = array())
     {
         return $this->returnIfSuccessful(
-            $this->productServiceProvider->getProducts( $params, $productIds )
+            $this->getProductServiceProvider()->getProducts( $params, $productIds )
         );
     }
 
     public function getProduct($params, $productId)
     {
         return $this->returnIfSuccessful(
-            $this->productServiceProvider->getProduct( $params, $productId )
+            $this->getProductServiceProvider()->getProduct( $params, $productId )
         );
     }
 
@@ -48,14 +74,14 @@ class ApiService {
     public function getSuppliers($params, $productIds = array())
     {
         return $this->returnIfSuccessful(
-            $this->supplierServiceProvider->getSuppliers( $params, $productIds )
+            $this->getSupplierServiceProvider()->getSuppliers( $params, $productIds )
         );
     }
 
     public function getSupplier($params, $productId)
     {
         return $this->returnIfSuccessful(
-            $this->supplierServiceProvider->getSupplier( $params, $productId )
+            $this->getSupplierServiceProvider()->getSupplier( $params, $productId )
         );
     }
 
@@ -63,7 +89,7 @@ class ApiService {
     public function getComparisons($params)
     {
         return $this->returnIfSuccessful(
-            $this->comparisonServiceProvider->getComparisons($params)
+            $this->getComparisonServiceProvider()->getComparisons($params)
         );
     }
 
@@ -71,28 +97,28 @@ class ApiService {
     public function getClient($id)
     {
         return $this->returnCrmResponse(
-            $this->clientServiceProvider->getClient($id)
+            $this->getClientServiceProvider()->getClient($id)
         );
     }
 
     public function searchClient($query)
     {
         return $this->returnCrmResponse(
-            $this->clientServiceProvider->searchClient($query)
+            $this->getClientServiceProvider()->searchClient($query)
         );
     }
 
     public function createClient($attributes)
     {
         return $this->returnCrmResponse(
-            $this->clientServiceProvider->createClient($attributes)
+            $this->getClientServiceProvider()->createClient($attributes)
         );
     }
 
     public function updateClient($id, $attributes)
     {
         return $this->returnCrmResponse(
-            $this->clientServiceProvider->updateClient($id, $attributes)
+            $this->getClientServiceProvider()->updateClient($id, $attributes)
         );
     }
 
@@ -100,21 +126,21 @@ class ApiService {
     public function getOrder($id)
     {
         return $this->returnCrmResponse(
-            $this->orderServiceProvider->getOrder($id)
+            $this->getOrderServiceProvider()->getOrder($id)
         );
     }
 
     public function createOrder($attributes)
     {
         return $this->returnCrmResponse(
-            $this->orderServiceProvider->createOrder($attributes)
+            $this->getOrderServiceProvider()->createOrder($attributes)
         );
     }
 
     public function updateOrder($id, $attributes)
     {
         return $this->returnCrmResponse(
-            $this->orderServiceProvider->updateOrder($id, $attributes)
+            $this->getOrderServiceProvider()->updateOrder($id, $attributes)
         );
     }
 
@@ -122,21 +148,21 @@ class ApiService {
     public function getContract($id)
     {
         return $this->returnCrmResponse(
-            $this->contractServiceProvider->getContract($id)
+            $this->getContractServiceProvider()->getContract($id)
         );
     }
 
     public function createContract($attributes)
     {
         return $this->returnCrmResponse(
-            $this->contractServiceProvider->createContract($attributes)
+            $this->getContractServiceProvider()->createContract($attributes)
         );
     }
 
     public function updateContract($id, $attributes)
     {
         return $this->returnCrmResponse(
-            $this->orderServiceProvider->updateContract($id, $attributes)
+            $this->getContractServiceProvider()->updateContract($id, $attributes)
         );
     }
 
@@ -157,6 +183,61 @@ class ApiService {
     protected function returnCrmResponse($response)
     {
         return json_decode( $response );
+    }
+
+
+    protected function getProductServiceProvider()
+    {
+        if( is_null($this->productServiceProvider) ) {
+            $this->productServiceProvider = new ProductServiceProvider();
+        }
+
+        return $this->productServiceProvider;
+    }
+
+    protected function getSupplierServiceProvider()
+    {
+        if( is_null($this->supplierServiceProvider) ) {
+            $this->supplierServiceProvider = new SupplierServiceProvider();
+        }
+
+        return $this->supplierServiceProvider;
+    }
+
+    protected function getComparisonServiceProvider()
+    {
+        if( is_null($this->comparisonServiceProvider) ) {
+            $this->comparisonServiceProvider = new ComparisonServiceProvider();
+        }
+
+        return $this->comparisonServiceProvider;
+    }
+
+    protected function getClientServiceProvider()
+    {
+        if( is_null($this->clientServiceProvider) ) {
+            $this->clientServiceProvider = new ClientServiceProvider( $this->config->get('Api::baseUrl') );
+        }
+
+        return $this->clientServiceProvider;
+    }
+
+    protected function getOrderServiceProvider()
+    {
+        if( is_null($this->orderServiceProvider) ) {
+            $this->orderServiceProvider = new OrderServiceProvider( $this->config->get('Api::baseUrl') );
+        }
+
+        return $this->orderServiceProvider;
+    }
+
+    protected function getContractServiceProvider()
+    {
+        if( is_null($this->contractServiceProvider) ) {
+            $this->contractServiceProvider = new ContractServiceProvider( $this->config->get('Api::baseUrl') );
+        }
+
+        return $this->contractServiceProvider;
     }
 
 }

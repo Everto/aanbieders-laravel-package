@@ -3,9 +3,9 @@
 
 class ContractServiceProvider extends BaseServiceProvider {
 
-    public function __construct()
+    public function __construct($baseUrl = null)
     {
-        parent::__construct();
+        parent::__construct($baseUrl);
 
         $this->defaults = array(
             'product_id'            => 0,
@@ -33,17 +33,17 @@ class ContractServiceProvider extends BaseServiceProvider {
 
     public function getContract($id)
     {
-        return $this->getCurlService()->get( $this->getCrmBaseUrl(). '/contracts/'. $id );
+        return $this->getCurlService()->get( $this->crmBaseUrl. '/contracts/'. $id );
     }
 
     public function createContract($attributes = array())
     {
-        return $this->getCurlService()->post( $this->getCrmBaseUrl(). '/contracts', $this->addDefaultAttributes( $attributes ) );
+        return $this->getCurlService()->post( $this->crmBaseUrl. '/contracts', $this->addDefaultAttributes( $attributes ) );
     }
 
     public function updateContract($id, $attributes = array())
     {
-        return $this->getCurlService()->post( $this->getCrmBaseUrl(). '/contracts/'. $id, $this->filterImmutableAttributes( $attributes ) );
+        return $this->getCurlService()->post( $this->crmBaseUrl. '/contracts/'. $id, $this->filterImmutableAttributes( $attributes ) );
     }
 
 }

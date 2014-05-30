@@ -3,9 +3,9 @@
 
 class OrderServiceProvider extends BaseServiceProvider {
 
-    public function __construct()
+    public function __construct($baseUrl = null)
     {
-        parent::__construct();
+        parent::__construct($baseUrl);
 
         $this->defaults = array(
             'client_id'                 => 0,
@@ -32,17 +32,17 @@ class OrderServiceProvider extends BaseServiceProvider {
 
     public function getOrder($id)
     {
-        return $this->getCurlService()->get( $this->getCrmBaseUrl() . '/orders/' . $id );
+        return $this->getCurlService()->get( $this->crmBaseUrl . '/orders/' . $id );
     }
 
     public function createOrder($attributes = array())
     {
-        return $this->getCurlService()->post( $this->getCrmBaseUrl(). '/orders', $this->addDefaultAttributes( $attributes ) );
+        return $this->getCurlService()->post( $this->crmBaseUrl. '/orders', $this->addDefaultAttributes( $attributes ) );
     }
 
     public function updateOrder($id, $attributes = array())
     {
-        return $this->getCurlService()->post( $this->getCrmBaseUrl(). '/orders/'. $id, $this->filterImmutableAttributes( $attributes ) );
+        return $this->getCurlService()->post( $this->crmBaseUrl. '/orders/'. $id, $this->filterImmutableAttributes( $attributes ) );
     }
 
 }

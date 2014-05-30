@@ -30,12 +30,17 @@ class ApiServiceProvider extends ServiceProvider {
      */
     public function register()
     {
+        $this->app['config']->package('aanbieders/api', __DIR__.'/../../config', 'Api');
+        $baseUrl = $this->app['config']->get('Api::baseUrl');
+
         $this->registerProductServiceProvider();
         $this->registerSupplierServiceProvider();
         $this->registerComparisonServiceProvider();
-        $this->registerOrderServiceProvider();
-        $this->registerClientServiceProvider();
-        $this->registerContractServiceProvider();
+
+        $this->registerClientServiceProvider( $baseUrl );
+        $this->registerOrderServiceProvider( $baseUrl );
+        $this->registerContractServiceProvider( $baseUrl );
+
         $this->registerApiService();
     }
 
@@ -69,32 +74,32 @@ class ApiServiceProvider extends ServiceProvider {
         );
     }
 
-    protected function registerOrderServiceProvider()
-    {
-        $this->app['Api.order'] = $this->app->share(
-            function($app)
-            {
-                return new OrderServiceProvider();
-            }
-        );
-    }
-
-    protected function registerClientServiceProvider()
+    protected function registerClientServiceProvider($baseUrl)
     {
         $this->app['Api.client'] = $this->app->share(
-            function($app)
+            function($app) use ($baseUrl)
             {
-                return new ClientServiceProvider();
+                return new ClientServiceProvider( $baseUrl );
             }
         );
     }
 
-    protected function registerContractServiceProvider()
+    protected function registerOrderServiceProvider($baseUrl)
+    {
+        $this->app['Api.order'] = $this->app->share(
+            function($app) use ($baseUrl)
+            {
+                return new OrderServiceProvider( $baseUrl );
+            }
+        );
+    }
+
+    protected function registerContractServiceProvider($baseUrl)
     {
         $this->app['Api.contract'] = $this->app->share(
-            function($app)
+            function($app) use ($baseUrl)
             {
-                return new ContractServiceProvider();
+                return new ContractServiceProvider( $baseUrl );
             }
         );
     }
@@ -105,6 +110,7 @@ class ApiServiceProvider extends ServiceProvider {
             function($app)
             {
                 return new ApiService(
+                    $app['config'],
                     $app['Api.product'],
                     $app['Api.supplier'],
                     $app['Api.comparison'],

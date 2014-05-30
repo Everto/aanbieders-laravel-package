@@ -9,14 +9,16 @@ class BaseServiceProvider {
 
     protected $curlService = null;
 
+    protected $crmBaseUrl = null;
+
     protected $defaults = array();
 
     protected $guards = array();
 
 
-    public function __construct()
+    public function __construct($crmBaseUrl = null)
     {
-        //
+        $this->crmBaseUrl = $crmBaseUrl;
     }
 
 

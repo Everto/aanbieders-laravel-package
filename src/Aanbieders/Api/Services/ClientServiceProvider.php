@@ -3,9 +3,9 @@
 
 class ClientServiceProvider extends BaseServiceProvider {
 
-    public function __construct()
+    public function __construct($baseUrl = null)
     {
-        parent::__construct();
+        parent::__construct($baseUrl);
 
         $this->defaults = array(
             'gender'            => 0,
@@ -39,22 +39,22 @@ class ClientServiceProvider extends BaseServiceProvider {
 
     public function getClient($id)
     {
-        return $this->getCurlService()->get( $this->getCrmBaseUrl(). '/clients/'. $id );
+        return $this->getCurlService()->get( $this->crmBaseUrl. '/clients/'. $id );
     }
 
     public function searchClient($query)
     {
-        return $this->getCurlService()->post( $this->getCrmBaseUrl(). '/clients/search', array( 'query' => $query ) );
+        return $this->getCurlService()->post( $this->crmBaseUrl. '/clients/search', array( 'query' => $query ) );
     }
 
     public function createClient($attributes = array())
     {
-        return $this->getCurlService()->post( $this->getCrmBaseUrl(). '/clients', $this->addDefaultAttributes( $attributes ) );
+        return $this->getCurlService()->post( $this->crmBaseUrl. '/clients', $this->addDefaultAttributes( $attributes ) );
     }
 
     public function updateClient($id, $attributes = array())
     {
-        return $this->getCurlService()->post( $this->getCrmBaseUrl(). '/clients/'. $id, $this->filterImmutableAttributes( $attributes ) );
+        return $this->getCurlService()->post( $this->crmBaseUrl. '/clients/'. $id, $this->filterImmutableAttributes( $attributes ) );
     }
 
 }
