@@ -2,6 +2,6 @@
 
     return array(
 
-        'baseUrl'           => 'aanbieders.dev/api'
+        'baseUrl'           => 'crm.econtract.be/api'
 
     );
