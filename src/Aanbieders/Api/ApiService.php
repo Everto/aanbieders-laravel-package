@@ -9,6 +9,7 @@ use Aanbieders\Api\Services\ProductServiceProvider;
 use Aanbieders\Api\Services\SupplierServiceProvider;
 use Aanbieders\Api\Services\ComparisonServiceProvider;
 
+use Aanbieders\Api\Services\AddressServiceProvider;
 use Aanbieders\Api\Services\ClientServiceProvider;
 use Aanbieders\Api\Services\OrderServiceProvider;
 use Aanbieders\Api\Services\ContractServiceProvider;
@@ -25,6 +26,8 @@ class ApiService {
 
     protected $comparisonServiceProvider = null;
 
+    protected $addressServiceProvider = null;
+
     protected $clientServiceProvider = null;
 
     protected $orderServiceProvider = null;
@@ -32,7 +35,7 @@ class ApiService {
     protected $contractServiceProvider = null;
 
 
-    public function __construct(Config $config = null, $productServiceProvider = null, $supplierServiceProvider = null, $comparisonServiceProvider = null, $clientServiceProvider = null, $orderServiceProvider = null, $contractServiceProvider = null)
+    public function __construct(Config $config = null, $productServiceProvider = null, $supplierServiceProvider = null, $comparisonServiceProvider = null, $addressServiceProvider = null, $clientServiceProvider = null, $orderServiceProvider = null, $contractServiceProvider = null)
     {
         if( is_a($config, '\Illuminate\Config\Repository') ) {
             $this->config = $config;
@@ -50,6 +53,7 @@ class ApiService {
         $this->supplierServiceProvider = $supplierServiceProvider;
         $this->comparisonServiceProvider = $comparisonServiceProvider;
 
+        $this->addressServiceProvider = $addressServiceProvider;
         $this->clientServiceProvider = $clientServiceProvider;
         $this->orderServiceProvider = $orderServiceProvider;
         $this->contractServiceProvider = $contractServiceProvider;
@@ -90,6 +94,28 @@ class ApiService {
     {
         return $this->returnIfSuccessful(
             $this->getComparisonServiceProvider()->getComparisons($params)
+        );
+    }
+
+
+    public function getAddress($id)
+    {
+        return $this->returnCrmResponse(
+            $this->getAddressServiceProvider()->getAddress($id)
+        );
+    }
+
+    public function createAddress($attributes)
+    {
+        return $this->returnCrmResponse(
+            $this->getAddressServiceProvider()->createAddress($attributes)
+        );
+    }
+
+    public function updateAddress($id, $attributes)
+    {
+        return $this->returnCrmResponse(
+            $this->getAddresstServiceProvider()->updateAddress($id, $attributes)
         );
     }
 
@@ -211,6 +237,15 @@ class ApiService {
         }
 
         return $this->comparisonServiceProvider;
+    }
+
+    protected function getAddressServiceProvider()
+    {
+        if( is_null($this->addressServiceProvider) ) {
+            $this->addressServiceProvider = new AddressServiceProvider( $this->config->get('Api::baseUrl') );
+        }
+
+        return $this->addressServiceProvider;
     }
 
     protected function getClientServiceProvider()

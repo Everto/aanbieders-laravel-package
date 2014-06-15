@@ -1,13 +1,16 @@
 <?php namespace Aanbieders\Api;
 
 
+use Illuminate\Support\ServiceProvider;
+
 use Aanbieders\Api\Services\ProductServiceProvider;
 use Aanbieders\Api\Services\SupplierServiceProvider;
 use Aanbieders\Api\Services\ComparisonServiceProvider;
-use Aanbieders\Api\Services\OrderServiceProvider;
+
+use Aanbieders\Api\Services\AddressServiceProvider;
 use Aanbieders\Api\Services\ClientServiceProvider;
+use Aanbieders\Api\Services\OrderServiceProvider;
 use Aanbieders\Api\Services\ContractServiceProvider;
-use Illuminate\Support\ServiceProvider;
 
 class ApiServiceProvider extends ServiceProvider {
 
@@ -37,6 +40,7 @@ class ApiServiceProvider extends ServiceProvider {
         $this->registerSupplierServiceProvider();
         $this->registerComparisonServiceProvider();
 
+        $this->registerAddressServiceProvider( $baseUrl );
         $this->registerClientServiceProvider( $baseUrl );
         $this->registerOrderServiceProvider( $baseUrl );
         $this->registerContractServiceProvider( $baseUrl );
@@ -70,6 +74,16 @@ class ApiServiceProvider extends ServiceProvider {
             function($app)
             {
                 return new ComparisonServiceProvider();
+            }
+        );
+    }
+
+    protected function registerAddressServiceProvider($baseUrl)
+    {
+        $this->app['Api.address'] = $this->app->share(
+            function($app) use ($baseUrl)
+            {
+                return new AddressServiceProvider( $baseUrl );
             }
         );
     }
@@ -114,6 +128,7 @@ class ApiServiceProvider extends ServiceProvider {
                     $app['Api.product'],
                     $app['Api.supplier'],
                     $app['Api.comparison'],
+                    $app['Api.address'],
                     $app['Api.client'],
                     $app['Api.order'],
                     $app['Api.contract']
