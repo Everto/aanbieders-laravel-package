@@ -6,6 +6,8 @@ use Illuminate\Support\ServiceProvider;
 use Aanbieders\Api\Services\ProductServiceProvider;
 use Aanbieders\Api\Services\SupplierServiceProvider;
 use Aanbieders\Api\Services\ComparisonServiceProvider;
+use Aanbieders\Api\Services\OptionServiceProvider;
+use Aanbieders\Api\Services\PromotionServiceProvider;
 
 use Aanbieders\Api\Services\AddressServiceProvider;
 use Aanbieders\Api\Services\ClientServiceProvider;
@@ -39,6 +41,8 @@ class ApiServiceProvider extends ServiceProvider {
         $this->registerProductServiceProvider();
         $this->registerSupplierServiceProvider();
         $this->registerComparisonServiceProvider();
+        $this->registerOptionServiceProvider( $baseUrl );
+        $this->registerPromotionServiceProvider( $baseUrl );
 
         $this->registerAddressServiceProvider( $baseUrl );
         $this->registerClientServiceProvider( $baseUrl );
@@ -74,6 +78,26 @@ class ApiServiceProvider extends ServiceProvider {
             function($app)
             {
                 return new ComparisonServiceProvider();
+            }
+        );
+    }
+
+    protected function registerOptionServiceProvider($baseUrl)
+    {
+        $this->app['Api.option'] = $this->app->share(
+            function($app) use ($baseUrl)
+            {
+                return new OptionServiceProvider( $baseUrl );
+            }
+        );
+    }
+
+    protected function registerPromotionServiceProvider($baseUrl)
+    {
+        $this->app['Api.promotion'] = $this->app->share(
+            function($app) use ($baseUrl)
+            {
+                return new PromotionServiceProvider( $baseUrl );
             }
         );
     }
@@ -128,6 +152,8 @@ class ApiServiceProvider extends ServiceProvider {
                     $app['Api.product'],
                     $app['Api.supplier'],
                     $app['Api.comparison'],
+                    $app['Api.option'],
+                    $app['Api.promotion'],
                     $app['Api.address'],
                     $app['Api.client'],
                     $app['Api.order'],

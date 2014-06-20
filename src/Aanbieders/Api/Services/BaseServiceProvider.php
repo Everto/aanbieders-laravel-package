@@ -46,11 +46,6 @@ class BaseServiceProvider {
         return $this->curlService;
     }
 
-    protected function getCrmBaseUrl()
-    {
-        return 'aanbieders.dev/api';
-    }
-
     protected function addDefaultAttributes($attributes)
     {
         return array_merge( $this->defaults, $attributes );

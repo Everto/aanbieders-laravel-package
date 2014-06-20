@@ -8,6 +8,8 @@ use Illuminate\Filesystem\Filesystem;
 use Aanbieders\Api\Services\ProductServiceProvider;
 use Aanbieders\Api\Services\SupplierServiceProvider;
 use Aanbieders\Api\Services\ComparisonServiceProvider;
+use Aanbieders\Api\Services\OptionServiceProvider;
+use Aanbieders\Api\Services\PromotionServiceProvider;
 
 use Aanbieders\Api\Services\AddressServiceProvider;
 use Aanbieders\Api\Services\ClientServiceProvider;
@@ -26,6 +28,10 @@ class ApiService {
 
     protected $comparisonServiceProvider = null;
 
+    protected $optionServiceProvider = null;
+
+    protected $promotionServiceProvider = null;
+
     protected $addressServiceProvider = null;
 
     protected $clientServiceProvider = null;
@@ -35,7 +41,7 @@ class ApiService {
     protected $contractServiceProvider = null;
 
 
-    public function __construct(Config $config = null, $productServiceProvider = null, $supplierServiceProvider = null, $comparisonServiceProvider = null, $addressServiceProvider = null, $clientServiceProvider = null, $orderServiceProvider = null, $contractServiceProvider = null)
+    public function __construct(Config $config = null, $productServiceProvider = null, $supplierServiceProvider = null, $comparisonServiceProvider = null, $optionServiceProvider = null, $promotionServiceProvider = null, $addressServiceProvider = null, $clientServiceProvider = null, $orderServiceProvider = null, $contractServiceProvider = null)
     {
         if( is_a($config, '\Illuminate\Config\Repository') ) {
             $this->config = $config;
@@ -52,6 +58,8 @@ class ApiService {
         $this->productServiceProvider = $productServiceProvider;
         $this->supplierServiceProvider = $supplierServiceProvider;
         $this->comparisonServiceProvider = $comparisonServiceProvider;
+        $this->optionServiceProvider = $optionServiceProvider;
+        $this->promotionServiceProvider = $promotionServiceProvider;
 
         $this->addressServiceProvider = $addressServiceProvider;
         $this->clientServiceProvider = $clientServiceProvider;
@@ -98,6 +106,36 @@ class ApiService {
     }
 
 
+    public function getOptions($params, $optionIds = array())
+    {
+        return $this->returnIfSuccessful(
+            $this->getOptionServiceProvider()->getOptions( $params, $optionIds )
+        );
+    }
+
+    public function getOption($params, $optionId)
+    {
+        return $this->returnIfSuccessful(
+            $this->getOptionServiceProvider()->getOption( $params, $optionId )
+        );
+    }
+
+
+    public function getPromotions($params, $optionIds = array())
+    {
+        return $this->returnIfSuccessful(
+            $this->getPromotionServiceProvider()->getPromotions( $params, $optionIds )
+        );
+    }
+
+    public function getPromotion($params, $optionId)
+    {
+        return $this->returnIfSuccessful(
+            $this->getPromotionServiceProvider()->getPromotion( $params, $optionId )
+        );
+    }
+
+
     public function getAddress($id)
     {
         return $this->returnCrmResponse(
@@ -115,7 +153,7 @@ class ApiService {
     public function updateAddress($id, $attributes)
     {
         return $this->returnCrmResponse(
-            $this->getAddresstServiceProvider()->updateAddress($id, $attributes)
+            $this->getAddressServiceProvider()->updateAddress($id, $attributes)
         );
     }
 
@@ -273,6 +311,24 @@ class ApiService {
         }
 
         return $this->contractServiceProvider;
+    }
+
+    protected function getOptionServiceProvider()
+    {
+        if( is_null($this->optionServiceProvider) ) {
+            $this->optionServiceProvider = new OptionServiceProvider( $this->config->get('Api::baseUrl') );
+        }
+
+        return $this->optionServiceProvider;
+    }
+
+    protected function getPromotionServiceProvider()
+    {
+        if( is_null($this->promotionServiceProvider) ) {
+            $this->promotionServiceProvider = new PromotionServiceProvider( $this->config->get('Api::baseUrl') );
+        }
+
+        return $this->promotionServiceProvider;
     }
 
 }
