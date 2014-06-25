@@ -8,8 +8,9 @@ use Illuminate\Filesystem\Filesystem;
 use Aanbieders\Api\Services\ProductServiceProvider;
 use Aanbieders\Api\Services\SupplierServiceProvider;
 use Aanbieders\Api\Services\ComparisonServiceProvider;
-use Aanbieders\Api\Services\OptionServiceProvider;
+use Aanbieders\Api\Services\AffiliateServiceProvider;
 use Aanbieders\Api\Services\PromotionServiceProvider;
+use Aanbieders\Api\Services\AffiliateServiceProvider;
 
 use Aanbieders\Api\Services\AddressServiceProvider;
 use Aanbieders\Api\Services\ClientServiceProvider;
@@ -28,9 +29,11 @@ class ApiService {
 
     protected $comparisonServiceProvider = null;
 
-    protected $optionServiceProvider = null;
+    protected $affiliateServiceProvider = null;
 
     protected $promotionServiceProvider = null;
+
+    protected $affiliateServiceProvider = null;
 
     protected $addressServiceProvider = null;
 
@@ -41,7 +44,17 @@ class ApiService {
     protected $contractServiceProvider = null;
 
 
-    public function __construct(Config $config = null, $productServiceProvider = null, $supplierServiceProvider = null, $comparisonServiceProvider = null, $optionServiceProvider = null, $promotionServiceProvider = null, $addressServiceProvider = null, $clientServiceProvider = null, $orderServiceProvider = null, $contractServiceProvider = null)
+    public function __construct(Config $config = null, 
+                                $productServiceProvider = null, 
+                                $supplierServiceProvider = null, 
+                                $comparisonServiceProvider = null, 
+                                $affiliateServiceProvider = null, 
+                                $promotionServiceProvider = null, 
+                                $addressServiceProvider = null, 
+                                $clientServiceProvider = null, 
+                                $orderServiceProvider = null, 
+                                $contractServiceProvider = null,
+                                $affiliateServiceProvider = null)
     {
         if( is_a($config, '\Illuminate\Config\Repository') ) {
             $this->config = $config;
@@ -58,8 +71,9 @@ class ApiService {
         $this->productServiceProvider = $productServiceProvider;
         $this->supplierServiceProvider = $supplierServiceProvider;
         $this->comparisonServiceProvider = $comparisonServiceProvider;
-        $this->optionServiceProvider = $optionServiceProvider;
+        $this->affiliateServiceProvider = $affiliateServiceProvider;
         $this->promotionServiceProvider = $promotionServiceProvider;
+        $this->affiliateServiceProvider = $affiliateServiceProvider;
 
         $this->addressServiceProvider = $addressServiceProvider;
         $this->clientServiceProvider = $clientServiceProvider;
@@ -106,35 +120,50 @@ class ApiService {
     }
 
 
-    public function getOptions($params, $optionIds = array())
+    public function getAffiliates($params, $affiliateIds = array())
     {
         return $this->returnIfSuccessful(
-            $this->getOptionServiceProvider()->getOptions( $params, $optionIds )
+            $this->getAffiliateServiceProvider()->getAffiliates( $params, $affiliateIds )
         );
     }
 
-    public function getOption($params, $optionId)
+    public function getAffiliate($params, $affiliateId)
     {
         return $this->returnIfSuccessful(
-            $this->getOptionServiceProvider()->getOption( $params, $optionId )
+            $this->getAffiliateServiceProvider()->getAffiliate( $params, $affiliateId )
         );
     }
 
 
-    public function getPromotions($params, $optionIds = array())
+    public function getPromotions($params, $affiliateIds = array())
     {
         return $this->returnIfSuccessful(
-            $this->getPromotionServiceProvider()->getPromotions( $params, $optionIds )
+            $this->getPromotionServiceProvider()->getPromotions( $params, $affiliateIds )
         );
     }
 
-    public function getPromotion($params, $optionId)
+    public function getPromotion($params, $affiliateId)
     {
         return $this->returnIfSuccessful(
-            $this->getPromotionServiceProvider()->getPromotion( $params, $optionId )
+            $this->getPromotionServiceProvider()->getPromotion( $params, $affiliateId )
         );
     }
 
+
+
+    public function getAffiliates($params, $affiliateIds = array())
+    {
+        return $this->returnIfSuccessful(
+            $this->getAffiliateServiceProvider()->getAffiliates( $params, $affiliateIds )
+        );
+    }
+
+    public function getAffiliate($params, $affiliateId)
+    {
+        return $this->returnIfSuccessful(
+            $this->getAffiliateServiceProvider()->getAffiliate( $params, $affiliateId )
+        );
+    }
 
     public function getAddress($id)
     {
@@ -313,13 +342,13 @@ class ApiService {
         return $this->contractServiceProvider;
     }
 
-    protected function getOptionServiceProvider()
+    protected function getAffiliateServiceProvider()
     {
-        if( is_null($this->optionServiceProvider) ) {
-            $this->optionServiceProvider = new OptionServiceProvider( $this->config->get('Api::baseUrl') );
+        if( is_null($this->affiliateServiceProvider) ) {
+            $this->affiliateServiceProvider = new AffiliateServiceProvider( $this->config->get('Api::baseUrl') );
         }
 
-        return $this->optionServiceProvider;
+        return $this->affiliateServiceProvider;
     }
 
     protected function getPromotionServiceProvider()

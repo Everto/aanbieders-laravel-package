@@ -8,6 +8,7 @@ use Aanbieders\Api\Services\SupplierServiceProvider;
 use Aanbieders\Api\Services\ComparisonServiceProvider;
 use Aanbieders\Api\Services\OptionServiceProvider;
 use Aanbieders\Api\Services\PromotionServiceProvider;
+use Aanbieders\Api\Services\AffiliateServiceProvider;
 
 use Aanbieders\Api\Services\AddressServiceProvider;
 use Aanbieders\Api\Services\ClientServiceProvider;
@@ -43,6 +44,7 @@ class ApiServiceProvider extends ServiceProvider {
         $this->registerComparisonServiceProvider();
         $this->registerOptionServiceProvider( $baseUrl );
         $this->registerPromotionServiceProvider( $baseUrl );
+        $this->registerAffiliateServiceProvider( $baseUrl );
 
         $this->registerAddressServiceProvider( $baseUrl );
         $this->registerClientServiceProvider( $baseUrl );
@@ -88,6 +90,16 @@ class ApiServiceProvider extends ServiceProvider {
             function($app) use ($baseUrl)
             {
                 return new OptionServiceProvider( $baseUrl );
+            }
+        );
+    }
+
+    protected function registerAffiliateServiceProvider($baseUrl)
+    {
+        $this->app['Api.affiliate'] = $this->app->share(
+            function($app) use ($baseUrl)
+            {
+                return new AffiliateServiceProvider( $baseUrl );
             }
         );
     }
@@ -153,6 +165,7 @@ class ApiServiceProvider extends ServiceProvider {
                     $app['Api.supplier'],
                     $app['Api.comparison'],
                     $app['Api.option'],
+                    $app['Api.affiliate'],
                     $app['Api.promotion'],
                     $app['Api.address'],
                     $app['Api.client'],

@@ -1,7 +1,7 @@
 {
     "name": "aanbieders/laravel-api",
     "description": "Laravel package to recover information of the Aanbieders.be Comparison service provider, using the Aanbieders API",
-    "version": "0.1.6",
+    "version": "0.1.7",
     "keywords": ["Laravel", "Aanbieders", "API"],
     "homepage": "http://www.aanbieders.be",
     "license": "MIT",
