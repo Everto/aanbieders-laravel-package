@@ -8,7 +8,7 @@ use Illuminate\Filesystem\Filesystem;
 use Aanbieders\Api\Services\ProductServiceProvider;
 use Aanbieders\Api\Services\SupplierServiceProvider;
 use Aanbieders\Api\Services\ComparisonServiceProvider;
-use Aanbieders\Api\Services\AffiliateServiceProvider;
+use Aanbieders\Api\Services\OptionServiceProvider;
 use Aanbieders\Api\Services\PromotionServiceProvider;
 use Aanbieders\Api\Services\AffiliateServiceProvider;
 
