@@ -33,6 +33,8 @@ class ApiService {
 
     protected $promotionServiceProvider = null;
 
+    protected $optionServiceProvider = null;
+
     protected $addressServiceProvider = null;
 
     protected $clientServiceProvider = null;
@@ -45,7 +47,8 @@ class ApiService {
     public function __construct(Config $config = null, 
                                 $productServiceProvider = null, 
                                 $supplierServiceProvider = null, 
-                                $comparisonServiceProvider = null, 
+                                $comparisonServiceProvider = null,
+                                $optionServiceProvider = null,  
                                 $affiliateServiceProvider = null, 
                                 $promotionServiceProvider = null, 
                                 $addressServiceProvider = null, 
@@ -70,6 +73,7 @@ class ApiService {
         $this->comparisonServiceProvider = $comparisonServiceProvider;
         $this->affiliateServiceProvider = $affiliateServiceProvider;
         $this->promotionServiceProvider = $promotionServiceProvider;
+        $this->optionServiceProvider = $optionServiceProvider;
 
         $this->addressServiceProvider = $addressServiceProvider;
         $this->clientServiceProvider = $clientServiceProvider;
@@ -130,6 +134,20 @@ class ApiService {
         );
     }
 
+
+    public function getOptions($params, $affiliateIds = array())
+    {
+        return $this->returnIfSuccessful(
+            $this->getOptionServiceProvider()->getOptions( $params, $affiliateIds )
+        );
+    }
+
+    public function getOption($params, $affiliateId)
+    {
+        return $this->returnIfSuccessful(
+            $this->getOptionServiceProvider()->getOption( $params, $affiliateId )
+        );
+    }
 
     public function getPromotions($params, $affiliateIds = array())
     {
@@ -341,4 +359,12 @@ class ApiService {
         return $this->promotionServiceProvider;
     }
 
+    protected function getOptionServiceProvider()
+    {
+        if( is_null($this->optionServiceProvider) ) {
+            $this->optionServiceProvider = new OptionServiceProvider( $this->config->get('Api::baseUrl') );
+        }
+
+        return $this->optionServiceProvider;
+    }
 }
