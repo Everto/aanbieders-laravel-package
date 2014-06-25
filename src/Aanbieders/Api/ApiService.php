@@ -33,8 +33,6 @@ class ApiService {
 
     protected $promotionServiceProvider = null;
 
-    protected $affiliateServiceProvider = null;
-
     protected $addressServiceProvider = null;
 
     protected $clientServiceProvider = null;
@@ -53,8 +51,7 @@ class ApiService {
                                 $addressServiceProvider = null, 
                                 $clientServiceProvider = null, 
                                 $orderServiceProvider = null, 
-                                $contractServiceProvider = null,
-                                $affiliateServiceProvider = null)
+                                $contractServiceProvider = null)
     {
         if( is_a($config, '\Illuminate\Config\Repository') ) {
             $this->config = $config;
@@ -73,7 +70,6 @@ class ApiService {
         $this->comparisonServiceProvider = $comparisonServiceProvider;
         $this->affiliateServiceProvider = $affiliateServiceProvider;
         $this->promotionServiceProvider = $promotionServiceProvider;
-        $this->affiliateServiceProvider = $affiliateServiceProvider;
 
         $this->addressServiceProvider = $addressServiceProvider;
         $this->clientServiceProvider = $clientServiceProvider;
@@ -149,21 +145,6 @@ class ApiService {
         );
     }
 
-
-
-    public function getAffiliates($params, $affiliateIds = array())
-    {
-        return $this->returnIfSuccessful(
-            $this->getAffiliateServiceProvider()->getAffiliates( $params, $affiliateIds )
-        );
-    }
-
-    public function getAffiliate($params, $affiliateId)
-    {
-        return $this->returnIfSuccessful(
-            $this->getAffiliateServiceProvider()->getAffiliate( $params, $affiliateId )
-        );
-    }
 
     public function getAddress($id)
     {
