@@ -120,6 +120,14 @@ class ApiService {
     }
 
 
+    public function readComparison($params, $comparisonId)
+    {
+        return $this->returnIfSuccessful(
+            $this->getComparisonServiceProvider()->readComparison($params, $comparisonId)
+        );
+    }
+
+
     public function getAffiliates($params, $affiliateIds = array())
     {
         return $this->returnIfSuccessful(

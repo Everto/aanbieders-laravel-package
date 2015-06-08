@@ -16,4 +16,10 @@ class ComparisonServiceProvider extends BaseServiceProvider {
         return $comparisons;
     }
 
+    public function readComparison($params, $comparisonId)
+    {
+        $comparison = $this->getApiClient()->readComparison( $params, $comparisonId );
+
+        return $comparison;
+    }
 }
