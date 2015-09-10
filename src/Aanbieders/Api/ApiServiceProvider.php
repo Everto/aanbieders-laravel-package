@@ -15,6 +15,8 @@ use Aanbieders\Api\Services\ClientServiceProvider;
 use Aanbieders\Api\Services\OrderServiceProvider;
 use Aanbieders\Api\Services\ContractServiceProvider;
 
+use Aanbieders\Api\Services\CallMeBackLeadServiceProvider;
+
 class ApiServiceProvider extends ServiceProvider {
 
     /**
@@ -38,7 +40,9 @@ class ApiServiceProvider extends ServiceProvider {
     {
         $this->app['config']->package('aanbieders/api', __DIR__.'/../../config', 'Api');
         $baseUrl = $this->app['config']->get('Api::baseUrl');
+        $baseUrl = 'aanbieders.dev/api';
 
+        // Register Aanbieders engine service providers
         $this->registerProductServiceProvider();
         $this->registerSupplierServiceProvider();
         $this->registerComparisonServiceProvider();
@@ -46,10 +50,14 @@ class ApiServiceProvider extends ServiceProvider {
         $this->registerPromotionServiceProvider( $baseUrl );
         $this->registerAffiliateServiceProvider( $baseUrl );
 
+        // Register Aanbieders CRM service providers
         $this->registerAddressServiceProvider( $baseUrl );
         $this->registerClientServiceProvider( $baseUrl );
         $this->registerOrderServiceProvider( $baseUrl );
         $this->registerContractServiceProvider( $baseUrl );
+
+        // Register Aanbieders CRM lead service providers
+        $this->registerCallMeBackLeadServiceProvider( $baseUrl );
 
         $this->registerApiService();
     }
@@ -154,6 +162,16 @@ class ApiServiceProvider extends ServiceProvider {
         );
     }
 
+    protected function registerCallMeBackLeadServiceProvider($baseUrl)
+    {
+        $this->app['Api.callMeBackLead'] = $this->app->share(
+            function($app) use ($baseUrl)
+            {
+                return new CallMeBackLeadServiceProvider( $baseUrl );
+            }
+        );
+    }
+
     protected function registerApiService()
     {
         $this->app['Api'] = $this->app->share(
@@ -170,7 +188,8 @@ class ApiServiceProvider extends ServiceProvider {
                     $app['Api.address'],
                     $app['Api.client'],
                     $app['Api.order'],
-                    $app['Api.contract']
+                    $app['Api.contract'],
+                    $app['Api.callMeBackLead']
                 );
             }
         );

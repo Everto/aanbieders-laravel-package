@@ -56,6 +56,7 @@ Add the API as an alias to your app.php file
 Once this is done, you can access the API using the alias you have selected in you app.php file:
 
 ```php
+    
     $products = Api::getProducts(
         array(
             'sg'        => 'consumer',
@@ -64,7 +65,7 @@ Once this is done, you can access the API using the alias you have selected in y
         )
     );
 
-    suppliers = Api::getSuppliers(
+    $suppliers = Api::getSuppliers(
         array(
             'sg'        => 'consumer',
             'cat'       => 'internet',
@@ -86,6 +87,7 @@ Once this is done, you can access the API using the alias you have selected in y
     );
 
     $contract = Api::getContract(63);
+
 ```
 
 For information regarding all possible parameters and their properties, we kindly refer you to [the API documentation](http://apihelp.econtract.be/).

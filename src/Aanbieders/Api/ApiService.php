@@ -16,6 +16,7 @@ use Aanbieders\Api\Services\AddressServiceProvider;
 use Aanbieders\Api\Services\ClientServiceProvider;
 use Aanbieders\Api\Services\OrderServiceProvider;
 use Aanbieders\Api\Services\ContractServiceProvider;
+use Aanbieders\Api\Services\CallMeBackLeadServiceProvider;
 
 use Aanbieders\Api\Exceptions\AanbiedersApiException;
 
@@ -24,24 +25,18 @@ class ApiService {
     protected $config = null;
 
     protected $productServiceProvider = null;
-
     protected $supplierServiceProvider = null;
-
     protected $comparisonServiceProvider = null;
-
     protected $affiliateServiceProvider = null;
-
     protected $promotionServiceProvider = null;
-
     protected $optionServiceProvider = null;
-
     protected $addressServiceProvider = null;
 
     protected $clientServiceProvider = null;
-
     protected $orderServiceProvider = null;
-
     protected $contractServiceProvider = null;
+
+    protected $callMeBackLeadServiceProvider = null;
 
 
     public function __construct(Config $config = null, 
@@ -54,7 +49,8 @@ class ApiService {
                                 $addressServiceProvider = null, 
                                 $clientServiceProvider = null, 
                                 $orderServiceProvider = null, 
-                                $contractServiceProvider = null)
+                                $contractServiceProvider = null,
+                                $callMeBackLeadServiceProvider = null)
     {
         if( is_a($config, '\Illuminate\Config\Repository') ) {
             $this->config = $config;
@@ -79,9 +75,17 @@ class ApiService {
         $this->clientServiceProvider = $clientServiceProvider;
         $this->orderServiceProvider = $orderServiceProvider;
         $this->contractServiceProvider = $contractServiceProvider;
+
+        $this->callMeBackLeadServiceProvider = $callMeBackLeadServiceProvider;
     }
 
 
+    /**
+     * @param array $params
+     * @param array $productIds
+     * @return \stdClass
+     * @throws AanbiedersApiException
+     */
     public function getProducts($params, $productIds = array())
     {
         return $this->returnIfSuccessful(
@@ -89,6 +93,12 @@ class ApiService {
         );
     }
 
+    /**
+     * @param array $params
+     * @param int $productId
+     * @return \stdClass
+     * @throws AanbiedersApiException
+     */
     public function getProduct($params, $productId)
     {
         return $this->returnIfSuccessful(
@@ -97,17 +107,29 @@ class ApiService {
     }
 
 
-    public function getSuppliers($params, $productIds = array())
+    /**
+     * @param array $params
+     * @param array $supplierIds
+     * @return \stdClass
+     * @throws AanbiedersApiException
+     */
+    public function getSuppliers($params, $supplierIds = array())
     {
         return $this->returnIfSuccessful(
-            $this->getSupplierServiceProvider()->getSuppliers( $params, $productIds )
+            $this->getSupplierServiceProvider()->getSuppliers( $params, $supplierIds )
         );
     }
 
-    public function getSupplier($params, $productId)
+    /**
+     * @param array $params
+     * @param int $supplierId
+     * @return \stdClass
+     * @throws AanbiedersApiException
+     */
+    public function getSupplier($params, $supplierId)
     {
         return $this->returnIfSuccessful(
-            $this->getSupplierServiceProvider()->getSupplier( $params, $productId )
+            $this->getSupplierServiceProvider()->getSupplier( $params, $supplierId )
         );
     }
 
@@ -116,14 +138,6 @@ class ApiService {
     {
         return $this->returnIfSuccessful(
             $this->getComparisonServiceProvider()->getComparisons($params)
-        );
-    }
-
-
-    public function readComparison($params, $comparisonId)
-    {
-        return $this->returnIfSuccessful(
-            $this->getComparisonServiceProvider()->readComparison($params, $comparisonId)
         );
     }
 
@@ -267,6 +281,23 @@ class ApiService {
     }
 
 
+    /**
+     * @param array $attributes
+     * @return \stdClass
+     * @throws AanbiedersApiException
+     */
+    public function createCallMeBackLead($attributes)
+    {
+        return $this->returnCrmResponse(
+            $this->getCallMeBackLeadServiceProvider()->createCallMeBackLead($attributes)
+        );
+    }
+
+    /**
+     * @param $response
+     * @return \stdClass
+     * @throws AanbiedersApiException
+     */
     protected function returnIfSuccessful($response)
     {
         if( is_array($response) || is_object($response) || $response === '' || is_null($response) ) {
@@ -280,12 +311,18 @@ class ApiService {
         return $response;
     }
 
+    /**
+     * @param string $response
+     * @return \stdClass
+     */
     protected function returnCrmResponse($response)
     {
         return json_decode( $response );
     }
 
-
+    /**
+     * @return ProductServiceProvider
+     */
     protected function getProductServiceProvider()
     {
         if( is_null($this->productServiceProvider) ) {
@@ -295,6 +332,9 @@ class ApiService {
         return $this->productServiceProvider;
     }
 
+    /**
+     * @return SupplierServiceProvider
+     */
     protected function getSupplierServiceProvider()
     {
         if( is_null($this->supplierServiceProvider) ) {
@@ -304,6 +344,9 @@ class ApiService {
         return $this->supplierServiceProvider;
     }
 
+    /**
+     * @return ComparisonServiceProvider
+     */
     protected function getComparisonServiceProvider()
     {
         if( is_null($this->comparisonServiceProvider) ) {
@@ -313,42 +356,9 @@ class ApiService {
         return $this->comparisonServiceProvider;
     }
 
-    protected function getAddressServiceProvider()
-    {
-        if( is_null($this->addressServiceProvider) ) {
-            $this->addressServiceProvider = new AddressServiceProvider( $this->config->get('Api::baseUrl') );
-        }
-
-        return $this->addressServiceProvider;
-    }
-
-    protected function getClientServiceProvider()
-    {
-        if( is_null($this->clientServiceProvider) ) {
-            $this->clientServiceProvider = new ClientServiceProvider( $this->config->get('Api::baseUrl') );
-        }
-
-        return $this->clientServiceProvider;
-    }
-
-    protected function getOrderServiceProvider()
-    {
-        if( is_null($this->orderServiceProvider) ) {
-            $this->orderServiceProvider = new OrderServiceProvider( $this->config->get('Api::baseUrl') );
-        }
-
-        return $this->orderServiceProvider;
-    }
-
-    protected function getContractServiceProvider()
-    {
-        if( is_null($this->contractServiceProvider) ) {
-            $this->contractServiceProvider = new ContractServiceProvider( $this->config->get('Api::baseUrl') );
-        }
-
-        return $this->contractServiceProvider;
-    }
-
+    /**
+     * @return AffiliateServiceProvider
+     */
     protected function getAffiliateServiceProvider()
     {
         if( is_null($this->affiliateServiceProvider) ) {
@@ -358,6 +368,9 @@ class ApiService {
         return $this->affiliateServiceProvider;
     }
 
+    /**
+     * @return PromotionServiceProvider
+     */
     protected function getPromotionServiceProvider()
     {
         if( is_null($this->promotionServiceProvider) ) {
@@ -367,6 +380,9 @@ class ApiService {
         return $this->promotionServiceProvider;
     }
 
+    /**
+     * @return OptionServiceProvider
+     */
     protected function getOptionServiceProvider()
     {
         if( is_null($this->optionServiceProvider) ) {
@@ -375,4 +391,65 @@ class ApiService {
 
         return $this->optionServiceProvider;
     }
+
+    /**
+     * @return AddressServiceProvider
+     */
+    protected function getAddressServiceProvider()
+    {
+        if( is_null($this->addressServiceProvider) ) {
+            $this->addressServiceProvider = new AddressServiceProvider( $this->config->get('Api::baseUrl') );
+        }
+
+        return $this->addressServiceProvider;
+    }
+
+    /**
+     * @return ClientServiceProvider
+     */
+    protected function getClientServiceProvider()
+    {
+        if( is_null($this->clientServiceProvider) ) {
+            $this->clientServiceProvider = new ClientServiceProvider( $this->config->get('Api::baseUrl') );
+        }
+
+        return $this->clientServiceProvider;
+    }
+
+    /**
+     * @return OrderServiceProvider
+     */
+    protected function getOrderServiceProvider()
+    {
+        if( is_null($this->orderServiceProvider) ) {
+            $this->orderServiceProvider = new OrderServiceProvider( $this->config->get('Api::baseUrl') );
+        }
+
+        return $this->orderServiceProvider;
+    }
+
+    /**
+     * @return ContractServiceProvider
+     */
+    protected function getContractServiceProvider()
+    {
+        if( is_null($this->contractServiceProvider) ) {
+            $this->contractServiceProvider = new ContractServiceProvider( $this->config->get('Api::baseUrl') );
+        }
+
+        return $this->contractServiceProvider;
+    }
+
+    /**
+     * @return CallMeBackLeadServiceProvider
+     */
+    protected function getCallMeBackLeadServiceProvider()
+    {
+        if( is_null($this->callMeBackLeadServiceProvider) ) {
+            $this->callMeBackLeadServiceProvider = new CallMeBackLeadServiceProvider( $this->config->get('Api::baseUrl') );
+        }
+
+        return $this->callMeBackLeadServiceProvider;
+    }
+
 }
