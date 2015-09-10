@@ -40,7 +40,6 @@ class ApiServiceProvider extends ServiceProvider {
     {
         $this->app['config']->package('aanbieders/api', __DIR__.'/../../config', 'Api');
         $baseUrl = $this->app['config']->get('Api::baseUrl');
-        $baseUrl = 'aanbieders.dev/api';
 
         // Register Aanbieders engine service providers
         $this->registerProductServiceProvider();
