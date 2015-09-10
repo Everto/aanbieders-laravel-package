@@ -33,17 +33,17 @@ class ContractServiceProvider extends BaseServiceProvider {
 
     public function getContract($id)
     {
-        return $this->getCurlService()->get( $this->crmBaseUrl. '/contracts/'. $id );
+        return $this->getCurlService()->get( $this->crmBaseUrl .'/contracts/'. $id );
     }
 
     public function createContract($attributes = array())
     {
-        return $this->getCurlService()->post( $this->crmBaseUrl. '/contracts', $this->addDefaultAttributes( $attributes ) );
+        return $this->getCurlService()->post( $this->crmBaseUrl .'/contracts', array(), $this->addDefaultAttributes( $attributes ) );
     }
 
     public function updateContract($id, $attributes = array())
     {
-        return $this->getCurlService()->post( $this->crmBaseUrl. '/contracts/'. $id, $this->filterImmutableAttributes( $attributes ) );
+        return $this->getCurlService()->post( $this->crmBaseUrl .'/contracts/'. $id, array(), $this->filterImmutableAttributes( $attributes ) );
     }
 
 }

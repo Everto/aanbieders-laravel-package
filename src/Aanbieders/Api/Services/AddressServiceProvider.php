@@ -26,12 +26,12 @@ class AddressServiceProvider extends BaseServiceProvider {
 
     public function createAddress($attributes = array())
     {
-        return $this->getCurlService()->post( $this->crmBaseUrl. '/addresses', $this->addDefaultAttributes( $attributes ) );
+        return $this->getCurlService()->post( $this->crmBaseUrl. '/addresses', array(), $this->addDefaultAttributes( $attributes ) );
     }
 
     public function updateAddress($id, $attributes = array())
     {
-        return $this->getCurlService()->post( $this->crmBaseUrl. '/addresses/'. $id, $this->filterImmutableAttributes( $attributes ) );
+        return $this->getCurlService()->post( $this->crmBaseUrl. '/addresses/'. $id, array(), $this->filterImmutableAttributes( $attributes ) );
     }
 
 }

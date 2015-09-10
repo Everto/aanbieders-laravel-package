@@ -39,22 +39,22 @@ class ClientServiceProvider extends BaseServiceProvider {
 
     public function getClient($id)
     {
-        return $this->getCurlService()->get( $this->crmBaseUrl. '/clients/'. $id );
+        return $this->getCurlService()->get( $this->crmBaseUrl .'/clients/'. $id );
     }
 
     public function searchClient($query)
     {
-        return $this->getCurlService()->post( $this->crmBaseUrl. '/clients/search', array( 'query' => $query ) );
+        return $this->getCurlService()->post( $this->crmBaseUrl .'/clients/search', array(), array( 'query' => $query ) );
     }
 
     public function createClient($attributes = array())
     {
-        return $this->getCurlService()->post( $this->crmBaseUrl. '/clients', $this->addDefaultAttributes( $attributes ) );
+        return $this->getCurlService()->post( $this->crmBaseUrl .'/clients', array(), $this->addDefaultAttributes( $attributes ) );
     }
 
     public function updateClient($id, $attributes = array())
     {
-        return $this->getCurlService()->post( $this->crmBaseUrl. '/clients/'. $id, $this->filterImmutableAttributes( $attributes ) );
+        return $this->getCurlService()->post( $this->crmBaseUrl .'/clients/'. $id, array(), $this->filterImmutableAttributes( $attributes ) );
     }
 
 }
