@@ -134,6 +134,11 @@ class ApiService {
     }
 
 
+    /**
+     * @param array $params
+     * @return \stdClass
+     * @throws AanbiedersApiException
+     */
     public function getComparisons($params)
     {
         return $this->returnIfSuccessful(
@@ -141,7 +146,26 @@ class ApiService {
         );
     }
 
+    /**
+     * @param array $params
+     * @param int $comparisonId
+     * @return \stdClass
+     * @throws AanbiedersApiException
+     */
+    public function readComparison($params, $comparisonId)
+    {
+        return $this->returnIfSuccessful(
+            $this->getComparisonServiceProvider()->readComparison($params, $comparisonId)
+        );
+    }
 
+
+    /**
+     * @param array $params
+     * @param array $affiliateIds
+     * @return \stdClass
+     * @throws AanbiedersApiException
+     */
     public function getAffiliates($params, $affiliateIds = array())
     {
         return $this->returnIfSuccessful(
@@ -149,6 +173,12 @@ class ApiService {
         );
     }
 
+    /**
+     * @param array $params
+     * @param int $affiliateId
+     * @return \stdClass
+     * @throws AanbiedersApiException
+     */
     public function getAffiliate($params, $affiliateId)
     {
         return $this->returnIfSuccessful(
