@@ -24,15 +24,18 @@ class BaseServiceProvider {
 
     protected function getApiClient()
     {
-        if( is_null($this->apiClient) ) {
-            $this->apiClient = new \Aanbieders(
-                array(
-                    'key'           => $_SERVER['API_key'],
-                    'secret'        => $_SERVER['API_secret'],
-                    'staging'       => $_SERVER['API_staging']
-                )
-            );
+        $isStaging = false;
+        if( $_SERVER[ 'API_staging' ] === 'true' ) {
+            $isStaging = true;
         }
+
+        $this->apiClient = new \Aanbieders(
+            array(
+                'key'           => $_SERVER[ 'API_key' ],
+                'secret'        => $_SERVER[ 'API_secret' ],
+                'staging'       => $isStaging
+            )
+        );
 
         return $this->apiClient;
     }
