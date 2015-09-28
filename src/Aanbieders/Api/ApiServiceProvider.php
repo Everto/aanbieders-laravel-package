@@ -28,26 +28,17 @@ class ApiServiceProvider extends ServiceProvider {
     /**
      * @return void
      */
-    public function boot()
-    {
-        $this->package('aanbieders/api');
-    }
-
-    /**
-     * @return void
-     */
     public function register()
     {
-        $this->app['config']->package('aanbieders/api', __DIR__.'/../../config', 'Api');
-        $baseUrl = $this->app['config']->get('Api::baseUrl');
+        $baseUrl = $_SERVER[ 'AANBIEDERS_URL' ];
 
         // Register Aanbieders engine service providers
         $this->registerProductServiceProvider();
         $this->registerSupplierServiceProvider();
         $this->registerComparisonServiceProvider();
-        $this->registerOptionServiceProvider( $baseUrl );
-        $this->registerPromotionServiceProvider( $baseUrl );
-        $this->registerAffiliateServiceProvider( $baseUrl );
+        $this->registerOptionServiceProvider();
+        $this->registerPromotionServiceProvider();
+        $this->registerAffiliateServiceProvider();
 
         // Register Aanbieders CRM service providers
         $this->registerAddressServiceProvider( $baseUrl );
@@ -91,32 +82,32 @@ class ApiServiceProvider extends ServiceProvider {
         );
     }
 
-    protected function registerOptionServiceProvider($baseUrl)
-    {
-        $this->app['Api.option'] = $this->app->share(
-            function($app) use ($baseUrl)
-            {
-                return new OptionServiceProvider( $baseUrl );
-            }
-        );
-    }
-
-    protected function registerAffiliateServiceProvider($baseUrl)
+    protected function registerAffiliateServiceProvider()
     {
         $this->app['Api.affiliate'] = $this->app->share(
-            function($app) use ($baseUrl)
+            function($app)
             {
-                return new AffiliateServiceProvider( $baseUrl );
+                return new AffiliateServiceProvider();
             }
         );
     }
 
-    protected function registerPromotionServiceProvider($baseUrl)
+    protected function registerOptionServiceProvider()
+    {
+        $this->app['Api.option'] = $this->app->share(
+            function($app)
+            {
+                return new OptionServiceProvider();
+            }
+        );
+    }
+
+    protected function registerPromotionServiceProvider()
     {
         $this->app['Api.promotion'] = $this->app->share(
-            function($app) use ($baseUrl)
+            function($app)
             {
-                return new PromotionServiceProvider( $baseUrl );
+                return new PromotionServiceProvider();
             }
         );
     }

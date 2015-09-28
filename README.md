@@ -1,8 +1,7 @@
-# Aanbieders.be comparison API
+Aanbieders.be comparison API
+======================================
 
-This package offers the Laravel integration of the Aanbieders.be comparison collection API. This API can be used by partners and affiliates of Aanbieders to leverage information from the Aanbieders comparison calculation engine on their personal websites.
-
-In order to use the API (and thus this package), an API key is required. If you are in need of such a key, please get in touch with Aanbieders.be via [their website](https://www.aanbieders.be/contact).
+This package offers the Laravel integration of the Aanbieders.be comparison collection API. This API can be used by partners and affiliates of Aanbieders to leverage information from the Aanbieders comparison calculation engine on their own websites.
 
 
 
@@ -11,49 +10,59 @@ In order to use the API (and thus this package), an API key is required. If you 
 Pull this package in through Composer.
 
 ```js
-{
-    "require": {
-        " aanbieders/laravel-api": "0.2.*"
+
+    {
+        "require": {
+            " aanbieders/laravel-api": "1.*"
+        }
     }
-}
+
 ```
 
+Next, you will need to aad several values to your server configuration using the `.env` file:
 
-### Native integration
-
-For native PHP projects, all you have to do is create a new instance of the ApiService class that is available within the package. This class requires no parameters and will automatically load all dependencies for you. Once this class is created, you have immediate access to all methods provided by the package.
-
-```php
-    require '../vendor/autoload.php';
-
-    $apiService = new \Aanbieders\Api\ApiService();
-    $contract = $apiService->getContract(63);
 ```
 
+    AANBIEDERS_URL=http://foo.com/bar       // URL to the Aanbieders CRM system
+    API_staging=false                       // Is this a staging server?
+    API_key=your_public_api_key             // Public API key
+    API_secret=your_secret_api_key          // Private API key
 
-### Laravel integration
+```
 
-If you are using Laravel, you can skip the code mentioned above and simply make use of the ApiServiceProvider that is available in the package. This will automatically load all the dependencies for you.
+In order to use the API (and thus this package), an API key is required. If you are in need of such a key, please get in touch with Aanbieders.be via [their website](https://www.aanbieders.be/contact).
 
-Add the API service provider to your app.php file
+
+
+## Usage
+
+Add the API service provider to your `config/app.php` file
 
 ```php
-        // ...
-        'Illuminate\Workbench\WorkbenchServiceProvider',
 
+    'providers'         => array(
+
+        //...
         'Aanbieders\Api\ApiServiceProvider',
+
+    ),
+
 ```
 
-Add the API as an alias to your app.php file
+Add the API as an alias to your `config/app.php` file
 
 ```php
-        // ...
-        'View'            => 'Illuminate\Support\Facades\View',
 
-        'Api'             => 'Aanbieders\Api\Facades\Api',
+    'facades'           => array(
+
+        //...
+        'Api'               => 'Aanbieders\Api\Facades\Api',
+
+    ),
+
 ```
 
-Once this is done, you can access the API using the alias you have selected in you app.php file:
+Once this is done, you can access the API using the alias you have selected in you `app.php` file:
 
 ```php
     
@@ -91,5 +100,21 @@ Once this is done, you can access the API using the alias you have selected in y
 ```
 
 For information regarding all possible parameters and their properties, we kindly refer you to [the API documentation](http://apihelp.econtract.be/).
+
+
+
+
+## License
+
+This package is proprietary software and may not be copied or redistributed without explicit permission.
+
+
+
+
+## Contact
+
+Evert Engelen
+
+- Email: evert@aanbieders.be
 
 
