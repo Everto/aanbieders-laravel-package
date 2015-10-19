@@ -16,6 +16,7 @@ use Aanbieders\Api\Services\OrderServiceProvider;
 use Aanbieders\Api\Services\ContractServiceProvider;
 
 use Aanbieders\Api\Services\CallMeBackLeadServiceProvider;
+use Aanbieders\Api\Services\ReferralLeadServiceProvider;
 
 class ApiServiceProvider extends ServiceProvider {
 
@@ -48,6 +49,7 @@ class ApiServiceProvider extends ServiceProvider {
 
         // Register Aanbieders CRM lead service providers
         $this->registerCallMeBackLeadServiceProvider( $baseUrl );
+        $this->registerReferralLeadServiceProvider( $baseUrl );
 
         $this->registerApiService();
     }
@@ -162,6 +164,16 @@ class ApiServiceProvider extends ServiceProvider {
         );
     }
 
+    protected function registerReferralLeadServiceProvider($baseUrl)
+    {
+        $this->app['Api.referralLead'] = $this->app->share(
+            function($app) use ($baseUrl)
+            {
+                return new ReferralLeadServiceProvider( $baseUrl );
+            }
+        );
+    }
+
     protected function registerApiService()
     {
         $this->app['Api'] = $this->app->share(
@@ -179,7 +191,8 @@ class ApiServiceProvider extends ServiceProvider {
                     $app['Api.client'],
                     $app['Api.order'],
                     $app['Api.contract'],
-                    $app['Api.callMeBackLead']
+                    $app['Api.callMeBackLead'],
+                    $app['Api.referralLead']
                 );
             }
         );
