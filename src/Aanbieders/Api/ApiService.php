@@ -15,6 +15,7 @@ use Aanbieders\Api\Traits\ContractTrait;
 use Aanbieders\Api\Traits\OrderTrait;
 
 use Aanbieders\Api\Traits\CallMeBackLeadTrait;
+use Aanbieders\Api\Traits\ClickOutLeadTrait;
 use Aanbieders\Api\Traits\ReferralLeadTrait;
 
 use Aanbieders\Api\Exceptions\AanbiedersApiException;
@@ -36,10 +37,11 @@ class ApiService {
     protected $contractServiceProvider = null;
 
     protected $callMeBackLeadServiceProvider = null;
+    protected $clickOutLeadServiceProvider = null;
     protected $referralLeadServiceProvider = null;
 
 
-    public function __construct(Config $config = null, $productServiceProvider = null, $supplierServiceProvider = null, $comparisonServiceProvider = null, $optionServiceProvider = null, $affiliateServiceProvider = null, $promotionServiceProvider = null, $addressServiceProvider = null, $clientServiceProvider = null, $orderServiceProvider = null, $contractServiceProvider = null, $callMeBackLeadServiceProvider = null, $referralLeadServiceProvider = null)
+    public function __construct(Config $config = null, $productServiceProvider = null, $supplierServiceProvider = null, $comparisonServiceProvider = null, $optionServiceProvider = null, $affiliateServiceProvider = null, $promotionServiceProvider = null, $addressServiceProvider = null, $clientServiceProvider = null, $orderServiceProvider = null, $contractServiceProvider = null, $callMeBackLeadServiceProvider = null, $clickOutLeadServiceProvider = null, $referralLeadServiceProvider = null)
     {
         $this->config = $config;
 
@@ -56,12 +58,13 @@ class ApiService {
         $this->contractServiceProvider = $contractServiceProvider;
 
         $this->callMeBackLeadServiceProvider = $callMeBackLeadServiceProvider;
+        $this->clickOutLeadServiceProvider = $clickOutLeadServiceProvider;
         $this->referralLeadServiceProvider = $referralLeadServiceProvider;
     }
 
 
     use ProductTrait, SupplierTrait, ComparisonTrait, AffiliateTrait, OptionTrait, PromotionTrait;
-    use AddressTrait, ClientTrait, ContractTrait, OrderTrait, CallMeBackLeadTrait, ReferralLeadTrait;
+    use AddressTrait, ClientTrait, ContractTrait, OrderTrait, CallMeBackLeadTrait, ReferralLeadTrait, ClickOutLeadTrait;
 
 
     /**
