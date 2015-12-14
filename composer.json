@@ -1,7 +1,7 @@
 {
     "name": "aanbieders/laravel-api",
     "description": "Laravel package to recover information of the Aanbieders.be Comparison service provider, using the Aanbieders API",
-    "version": "1.2.0",
+    "version": "2.0.0",
     "keywords": ["Laravel", "Aanbieders", "API"],
     "homepage": "http://www.aanbieders.be",
     "license": "MIT",
@@ -22,7 +22,7 @@
         "illuminate/support": "~5.0",
         "illuminate/config": "~5.0",
         "everto/aanbieders-api-client": "0.1.*",
-        "ixudra/curl": "~5.0"
+        "ixudra/curl": "~6.0"
     },
 
     "require-dev": {

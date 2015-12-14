@@ -13,7 +13,7 @@ Pull this package in through Composer.
 
     {
         "require": {
-            " aanbieders/laravel-api": "1.*"
+            " aanbieders/laravel-api": "2.*"
         }
     }
 
@@ -62,7 +62,7 @@ Add the API as an alias to your `config/app.php` file
 
 ```
 
-Once this is done, you can access the API using the alias you have selected in you `app.php` file:
+Once this is done, you can access the API using the alias you have selected in your `config/app.php` file:
 
 ```php
     

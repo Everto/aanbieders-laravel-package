@@ -3,21 +3,22 @@
 
 use Illuminate\Support\ServiceProvider;
 
-use Aanbieders\Api\Services\ProductServiceProvider;
-use Aanbieders\Api\Services\SupplierServiceProvider;
-use Aanbieders\Api\Services\ComparisonServiceProvider;
-use Aanbieders\Api\Services\OptionServiceProvider;
-use Aanbieders\Api\Services\PromotionServiceProvider;
-use Aanbieders\Api\Services\AffiliateServiceProvider;
+use Aanbieders\Api\Services\Api\ProductServiceProvider;
+use Aanbieders\Api\Services\Api\SupplierServiceProvider;
+use Aanbieders\Api\Services\Api\ComparisonServiceProvider as ApiComparisonServiceProvider;
+use Aanbieders\Api\Services\Api\OptionServiceProvider;
+use Aanbieders\Api\Services\Api\PromotionServiceProvider;
+use Aanbieders\Api\Services\Api\AffiliateServiceProvider;
 
-use Aanbieders\Api\Services\AddressServiceProvider;
-use Aanbieders\Api\Services\ClientServiceProvider;
-use Aanbieders\Api\Services\OrderServiceProvider;
-use Aanbieders\Api\Services\ContractServiceProvider;
+use Aanbieders\Api\Services\Crm\AddressServiceProvider;
+use Aanbieders\Api\Services\Crm\ClientServiceProvider;
+use Aanbieders\Api\Services\Crm\OrderServiceProvider;
+use Aanbieders\Api\Services\Crm\ComparisonServiceProvider as CrmComparisonServiceProvider;
+use Aanbieders\Api\Services\Crm\ContractServiceProvider;
 
-use Aanbieders\Api\Services\CallMeBackLeadServiceProvider;
-use Aanbieders\Api\Services\ClickOutLeadServiceProvider;
-use Aanbieders\Api\Services\ReferralLeadServiceProvider;
+use Aanbieders\Api\Services\Crm\CallMeBackLeadServiceProvider;
+use Aanbieders\Api\Services\Crm\ClickOutLeadServiceProvider;
+use Aanbieders\Api\Services\Crm\ReferralLeadServiceProvider;
 
 class ApiServiceProvider extends ServiceProvider {
 
@@ -37,7 +38,7 @@ class ApiServiceProvider extends ServiceProvider {
         // Register Aanbieders engine service providers
         $this->registerProductServiceProvider();
         $this->registerSupplierServiceProvider();
-        $this->registerComparisonServiceProvider();
+        $this->registerApiComparisonServiceProvider();
         $this->registerOptionServiceProvider();
         $this->registerPromotionServiceProvider();
         $this->registerAffiliateServiceProvider();
@@ -46,6 +47,7 @@ class ApiServiceProvider extends ServiceProvider {
         $this->registerAddressServiceProvider( $baseUrl );
         $this->registerClientServiceProvider( $baseUrl );
         $this->registerOrderServiceProvider( $baseUrl );
+        $this->registerCrmComparisonServiceProvider( $baseUrl );
         $this->registerContractServiceProvider( $baseUrl );
 
         // Register Aanbieders CRM lead service providers
@@ -76,12 +78,12 @@ class ApiServiceProvider extends ServiceProvider {
         );
     }
 
-    protected function registerComparisonServiceProvider()
+    protected function registerApiComparisonServiceProvider()
     {
         $this->app['Api.comparison'] = $this->app->share(
             function($app)
             {
-                return new ComparisonServiceProvider();
+                return new ApiComparisonServiceProvider();
             }
         );
     }
@@ -136,12 +138,12 @@ class ApiServiceProvider extends ServiceProvider {
         );
     }
 
-    protected function registerOrderServiceProvider($baseUrl)
+    protected function registerCrmComparisonServiceProvider($baseUrl)
     {
-        $this->app['Api.order'] = $this->app->share(
+        $this->app['Api.crm.comparison'] = $this->app->share(
             function($app) use ($baseUrl)
             {
-                return new OrderServiceProvider( $baseUrl );
+                return new CrmComparisonServiceProvider( $baseUrl );
             }
         );
     }
@@ -152,6 +154,16 @@ class ApiServiceProvider extends ServiceProvider {
             function($app) use ($baseUrl)
             {
                 return new ContractServiceProvider( $baseUrl );
+            }
+        );
+    }
+
+    protected function registerOrderServiceProvider($baseUrl)
+    {
+        $this->app['Api.order'] = $this->app->share(
+            function($app) use ($baseUrl)
+            {
+                return new OrderServiceProvider( $baseUrl );
             }
         );
     }
@@ -201,8 +213,9 @@ class ApiServiceProvider extends ServiceProvider {
                     $app['Api.promotion'],
                     $app['Api.address'],
                     $app['Api.client'],
-                    $app['Api.order'],
+                    $app['Api.crm.comparison'],
                     $app['Api.contract'],
+                    $app['Api.order'],
                     $app['Api.callMeBackLead'],
                     $app['Api.clickOutLead'],
                     $app['Api.referralLead']

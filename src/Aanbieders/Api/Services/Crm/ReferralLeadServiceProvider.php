@@ -7,7 +7,10 @@ class ReferralLeadServiceProvider extends BaseServiceProvider {
 
     public function createReferralLead($attributes = array())
     {
-        return $this->getCurlService()->post( $this->crmBaseUrl .'/referrals', array(), $this->addDefaultAttributes( $attributes ) );
+        return $this->getCurlService()
+            ->to( $this->crmBaseUrl .'/referrals' )
+            ->withData( $this->addDefaultAttributes( $attributes ) )
+            ->post();
     }
 
 }

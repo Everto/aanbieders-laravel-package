@@ -14,7 +14,7 @@ trait ComparisonTrait {
     public function getComparisons($params)
     {
         return $this->returnIfSuccessful(
-            $this->getComparisonServiceProvider()->getComparisons($params)
+            $this->getApiComparisonServiceProvider()->getComparisons($params)
         );
     }
 
@@ -27,7 +27,7 @@ trait ComparisonTrait {
     public function readComparison($params, $comparisonId)
     {
         return $this->returnIfSuccessful(
-            $this->getComparisonServiceProvider()->readComparison($params, $comparisonId)
+            $this->getApiComparisonServiceProvider()->readComparison($params, $comparisonId)
         );
     }
 
@@ -35,13 +35,13 @@ trait ComparisonTrait {
     /**
      * @return ComparisonServiceProvider
      */
-    protected function getComparisonServiceProvider()
+    protected function getApiComparisonServiceProvider()
     {
-        if( is_null($this->comparisonServiceProvider) ) {
-            $this->comparisonServiceProvider = new ComparisonServiceProvider();
+        if( is_null($this->apiComparisonServiceProvider) ) {
+            $this->apiComparisonServiceProvider = new ComparisonServiceProvider();
         }
 
-        return $this->comparisonServiceProvider;
+        return $this->apiComparisonServiceProvider;
     }
 
 }

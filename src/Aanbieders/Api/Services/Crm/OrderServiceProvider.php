@@ -34,17 +34,25 @@ class OrderServiceProvider extends BaseServiceProvider {
 
     public function getOrder($id)
     {
-        return $this->getCurlService()->get( $this->crmBaseUrl .'/orders/'. $id );
+        return $this->getCurlService()
+            ->to( $this->crmBaseUrl .'/orders/'. $id )
+            ->post();
     }
 
     public function createOrder($attributes = array())
     {
-        return $this->getCurlService()->post( $this->crmBaseUrl .'/orders', array(), $this->addDefaultAttributes( $attributes ) );
+        return $this->getCurlService()
+            ->to( $this->crmBaseUrl .'/orders' )
+            ->withData( $this->addDefaultAttributes( $attributes ) )
+            ->post();
     }
 
     public function updateOrder($id, $attributes = array())
     {
-        return $this->getCurlService()->post( $this->crmBaseUrl .'/orders/'. $id, array(), $this->filterImmutableAttributes( $attributes ) );
+        return $this->getCurlService()
+            ->to( $this->crmBaseUrl .'/orders/'. $id )
+            ->withData( $this->filterImmutableAttributes( $attributes ) )
+            ->post();
     }
 
 }

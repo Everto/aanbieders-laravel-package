@@ -23,17 +23,23 @@ class AddressServiceProvider extends BaseServiceProvider {
 
     public function getAddress($id)
     {
-        return $this->getCurlService()->get( $this->crmBaseUrl .'/addresses/'. $id );
+        return $this->getCurlService()->to( $this->crmBaseUrl .'/addresses/'. $id )->get();
     }
 
     public function createAddress($attributes = array())
     {
-        return $this->getCurlService()->post( $this->crmBaseUrl .'/addresses', array(), $this->addDefaultAttributes( $attributes ) );
+        return $this->getCurlService()
+            ->to( $this->crmBaseUrl .'/addresses' )
+            ->withData( $this->addDefaultAttributes( $attributes ) )
+            ->post();
     }
 
     public function updateAddress($id, $attributes = array())
     {
-        return $this->getCurlService()->post( $this->crmBaseUrl .'/addresses/'. $id, array(), $this->filterImmutableAttributes( $attributes ) );
+        return $this->getCurlService()
+            ->to( $this->crmBaseUrl .'/addresses/'. $id )
+            ->withData( $this->filterImmutableAttributes( $attributes ) )
+            ->post();
     }
 
 }

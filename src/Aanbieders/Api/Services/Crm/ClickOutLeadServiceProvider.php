@@ -7,7 +7,10 @@ class ClickOutLeadServiceProvider extends BaseServiceProvider {
 
     public function createClickOutLead($attributes = array())
     {
-        return $this->getCurlService()->post( $this->crmBaseUrl .'/leads/clickOut', array(), $this->addDefaultAttributes( $attributes ) );
+        return $this->getCurlService()
+            ->to( $this->crmBaseUrl .'/leads/clickOut' )
+            ->withData( $this->addDefaultAttributes( $attributes ) )
+            ->post();
     }
 
 }
