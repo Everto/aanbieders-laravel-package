@@ -1,5 +1,7 @@
-<?php namespace Aanbieders\Api\Services;
+<?php namespace Aanbieders\Api\Services\Crm;
 
+
+use Aanbieders\Api\Services\BaseServiceProvider;
 
 class CallMeBackLeadServiceProvider extends BaseServiceProvider {
 

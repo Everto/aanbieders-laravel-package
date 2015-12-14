@@ -1,7 +1,7 @@
-<?php namespace Aanbieders\Api\Traits;
+<?php namespace Aanbieders\Api\Traits\Api;
 
 
-use Aanbieders\Api\Services\ComparisonServiceProvider;
+use Aanbieders\Api\Services\Api\ComparisonServiceProvider;
 use Aanbieders\Api\Exceptions\AanbiedersApiException;
 
 trait ComparisonTrait {

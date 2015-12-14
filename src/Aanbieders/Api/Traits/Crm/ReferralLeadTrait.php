@@ -1,7 +1,7 @@
-<?php namespace Aanbieders\Api\Traits;
+<?php namespace Aanbieders\Api\Traits\Crm;
 
 
-use Aanbieders\Api\Services\ReferralLeadServiceProvider;
+use Aanbieders\Api\Services\Crm\ReferralLeadServiceProvider;
 
 trait ReferralLeadTrait {
 

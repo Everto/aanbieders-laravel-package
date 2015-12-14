@@ -1,7 +1,7 @@
-<?php namespace Aanbieders\Api\Traits;
+<?php namespace Aanbieders\Api\Traits\Api;
 
 
-use Aanbieders\Api\Services\AffiliateServiceProvider;
+use Aanbieders\Api\Services\Api\AffiliateServiceProvider;
 use Aanbieders\Api\Exceptions\AanbiedersApiException;
 
 trait AffiliateTrait {

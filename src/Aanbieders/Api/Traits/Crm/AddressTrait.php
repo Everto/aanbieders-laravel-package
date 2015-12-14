@@ -1,7 +1,7 @@
-<?php namespace Aanbieders\Api\Traits;
+<?php namespace Aanbieders\Api\Traits\Crm;
 
 
-use Aanbieders\Api\Services\AddressServiceProvider;
+use Aanbieders\Api\Services\Crm\AddressServiceProvider;
 
 trait AddressTrait {
 

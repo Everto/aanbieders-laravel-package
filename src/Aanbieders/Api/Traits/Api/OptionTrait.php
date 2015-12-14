@@ -1,7 +1,7 @@
-<?php namespace Aanbieders\Api\Traits;
+<?php namespace Aanbieders\Api\Traits\Api;
 
 
-use Aanbieders\Api\Services\OptionServiceProvider;
+use Aanbieders\Api\Services\Api\OptionServiceProvider;
 use Aanbieders\Api\Exceptions\AanbiedersApiException;
 
 trait OptionTrait {

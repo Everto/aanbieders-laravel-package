@@ -1,5 +1,7 @@
-<?php namespace Aanbieders\Api\Services;
+<?php namespace Aanbieders\Api\Services\Api;
 
+
+use Aanbieders\Api\Services\BaseServiceProvider;
 
 class PromotionServiceProvider extends BaseServiceProvider {
 

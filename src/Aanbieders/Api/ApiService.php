@@ -2,21 +2,21 @@
 
 
 use Illuminate\Config\Repository as Config;
-use Aanbieders\Api\Traits\SupplierTrait;
-use Aanbieders\Api\Traits\ProductTrait;
-use Aanbieders\Api\Traits\AffiliateTrait;
-use Aanbieders\Api\Traits\ComparisonTrait;
-use Aanbieders\Api\Traits\OptionTrait;
-use Aanbieders\Api\Traits\PromotionTrait;
+use Aanbieders\Api\Traits\Api\SupplierTrait;
+use Aanbieders\Api\Traits\Api\ProductTrait;
+use Aanbieders\Api\Traits\Api\AffiliateTrait;
+use Aanbieders\Api\Traits\Api\ComparisonTrait;
+use Aanbieders\Api\Traits\Api\OptionTrait;
+use Aanbieders\Api\Traits\Api\PromotionTrait;
 
-use Aanbieders\Api\Traits\AddressTrait;
-use Aanbieders\Api\Traits\ClientTrait;
-use Aanbieders\Api\Traits\ContractTrait;
-use Aanbieders\Api\Traits\OrderTrait;
+use Aanbieders\Api\Traits\Crm\AddressTrait;
+use Aanbieders\Api\Traits\Crm\ClientTrait;
+use Aanbieders\Api\Traits\Crm\ContractTrait;
+use Aanbieders\Api\Traits\Crm\OrderTrait;
 
-use Aanbieders\Api\Traits\CallMeBackLeadTrait;
-use Aanbieders\Api\Traits\ClickOutLeadTrait;
-use Aanbieders\Api\Traits\ReferralLeadTrait;
+use Aanbieders\Api\Traits\Crm\CallMeBackLeadTrait;
+use Aanbieders\Api\Traits\Crm\ClickOutLeadTrait;
+use Aanbieders\Api\Traits\Crm\ReferralLeadTrait;
 
 use Aanbieders\Api\Exceptions\AanbiedersApiException;
 
@@ -64,7 +64,8 @@ class ApiService {
 
 
     use ProductTrait, SupplierTrait, ComparisonTrait, AffiliateTrait, OptionTrait, PromotionTrait;
-    use AddressTrait, ClientTrait, ContractTrait, OrderTrait, CallMeBackLeadTrait, ReferralLeadTrait, ClickOutLeadTrait;
+    use AddressTrait, ClientTrait, ContractTrait, OrderTrait;
+    use CallMeBackLeadTrait, ClickOutLeadTrait, ReferralLeadTrait;
 
 
     /**

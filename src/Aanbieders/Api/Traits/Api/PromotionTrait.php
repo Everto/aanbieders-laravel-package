@@ -1,7 +1,7 @@
-<?php namespace Aanbieders\Api\Traits;
+<?php namespace Aanbieders\Api\Traits\Api;
 
 
-use Aanbieders\Api\Services\PromotionServiceProvider;
+use Aanbieders\Api\Services\Api\PromotionServiceProvider;
 use Aanbieders\Api\Exceptions\AanbiedersApiException;
 
 trait PromotionTrait {

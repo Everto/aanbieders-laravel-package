@@ -1,7 +1,7 @@
-<?php namespace Aanbieders\Api\Traits;
+<?php namespace Aanbieders\Api\Traits\Crm;
 
 
-use Aanbieders\Api\Services\OrderServiceProvider;
+use Aanbieders\Api\Services\Crm\OrderServiceProvider;
 use Aanbieders\Api\Exceptions\AanbiedersApiException;
 
 trait OrderTrait {

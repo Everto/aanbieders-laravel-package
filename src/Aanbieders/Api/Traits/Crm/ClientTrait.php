@@ -1,7 +1,7 @@
-<?php namespace Aanbieders\Api\Traits;
+<?php namespace Aanbieders\Api\Traits\Crm;
 
 
-use Aanbieders\Api\Services\ClientServiceProvider;
+use Aanbieders\Api\Services\Crm\ClientServiceProvider;
 
 trait ClientTrait {
 

@@ -1,7 +1,7 @@
-<?php namespace Aanbieders\Api\Traits;
+<?php namespace Aanbieders\Api\Traits\Crm;
 
 
-use Aanbieders\Api\Services\ContractServiceProvider;
+use Aanbieders\Api\Services\Crm\ContractServiceProvider;
 use Aanbieders\Api\Exceptions\AanbiedersApiException;
 
 trait ContractTrait {

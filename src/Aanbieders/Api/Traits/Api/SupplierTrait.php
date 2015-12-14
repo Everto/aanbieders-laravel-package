@@ -1,7 +1,7 @@
-<?php namespace Aanbieders\Api\Traits;
+<?php namespace Aanbieders\Api\Traits\Api;
 
 
-use Aanbieders\Api\Services\SupplierServiceProvider;
+use Aanbieders\Api\Services\Api\SupplierServiceProvider;
 use Aanbieders\Api\Exceptions\AanbiedersApiException;
 
 trait SupplierTrait {
