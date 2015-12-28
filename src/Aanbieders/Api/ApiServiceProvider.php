@@ -13,7 +13,7 @@ use Aanbieders\Api\Services\Api\AffiliateServiceProvider;
 use Aanbieders\Api\Services\Crm\AddressServiceProvider;
 use Aanbieders\Api\Services\Crm\ClientServiceProvider;
 use Aanbieders\Api\Services\Crm\OrderServiceProvider;
-use Aanbieders\Api\Services\Crm\ComparisonServiceProvider as CrmComparisonServiceProvider;
+use Aanbieders\Api\Services\Crm\RecommendationServiceProvider as CrmComparisonServiceProvider;
 use Aanbieders\Api\Services\Crm\ContractServiceProvider;
 
 use Aanbieders\Api\Services\Crm\CallMeBackLeadServiceProvider;

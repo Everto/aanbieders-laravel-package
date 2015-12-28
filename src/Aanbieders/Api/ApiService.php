@@ -11,7 +11,7 @@ use Aanbieders\Api\Traits\Api\PromotionTrait;
 
 use Aanbieders\Api\Traits\Crm\AddressTrait;
 use Aanbieders\Api\Traits\Crm\ClientTrait;
-use Aanbieders\Api\Traits\Crm\ComparisonTrait as CrmComparisonTrait;
+use Aanbieders\Api\Traits\Crm\RecommendationTrait;
 use Aanbieders\Api\Traits\Crm\ContractTrait;
 use Aanbieders\Api\Traits\Crm\OrderTrait;
 
@@ -34,7 +34,7 @@ class ApiService {
 
     protected $addressServiceProvider = null;
     protected $clientServiceProvider = null;
-    protected $crmComparisonServiceProvider = null;
+    protected $recommendationServiceProvider = null;
     protected $contractServiceProvider = null;
     protected $orderServiceProvider = null;
 
@@ -43,7 +43,7 @@ class ApiService {
     protected $referralLeadServiceProvider = null;
 
 
-    public function __construct(Config $config = null, $productServiceProvider = null, $supplierServiceProvider = null, $apiComparisonServiceProvider = null, $optionServiceProvider = null, $affiliateServiceProvider = null, $promotionServiceProvider = null, $addressServiceProvider = null, $clientServiceProvider = null, $crmComparisonServiceProvider = null, $contractServiceProvider = null, $orderServiceProvider = null, $callMeBackLeadServiceProvider = null, $clickOutLeadServiceProvider = null, $referralLeadServiceProvider = null)
+    public function __construct(Config $config = null, $productServiceProvider = null, $supplierServiceProvider = null, $apiComparisonServiceProvider = null, $optionServiceProvider = null, $affiliateServiceProvider = null, $promotionServiceProvider = null, $addressServiceProvider = null, $clientServiceProvider = null, $recommendationServiceProvider = null, $contractServiceProvider = null, $orderServiceProvider = null, $callMeBackLeadServiceProvider = null, $clickOutLeadServiceProvider = null, $referralLeadServiceProvider = null)
     {
         $this->config = $config;
 
@@ -56,7 +56,7 @@ class ApiService {
 
         $this->addressServiceProvider = $addressServiceProvider;
         $this->clientServiceProvider = $clientServiceProvider;
-        $this->crmComparisonServiceProvider = $crmComparisonServiceProvider;
+        $this->recommendationServiceProvider = $recommendationServiceProvider;
         $this->contractServiceProvider = $contractServiceProvider;
         $this->orderServiceProvider = $orderServiceProvider;
 
@@ -67,7 +67,7 @@ class ApiService {
 
 
     use ProductTrait, SupplierTrait, ApiComparisonTrait, AffiliateTrait, OptionTrait, PromotionTrait;
-    use AddressTrait, ClientTrait, CrmComparisonTrait, ContractTrait, OrderTrait;
+    use AddressTrait, ClientTrait, RecommendationTrait, ContractTrait, OrderTrait;
     use CallMeBackLeadTrait, ClickOutLeadTrait, ReferralLeadTrait;
 
 

@@ -3,7 +3,7 @@
 
 use Aanbieders\Api\Services\BaseServiceProvider;
 
-class ComparisonServiceProvider extends BaseServiceProvider {
+class RecommendationServiceProvider extends BaseServiceProvider {
 
     public function __construct($baseUrl = null)
     {
@@ -11,10 +11,10 @@ class ComparisonServiceProvider extends BaseServiceProvider {
     }
 
 
-    public function getComparison($id)
+    public function getRecommendation($id)
     {
         return $this->getCurlService()
-            ->to( $this->crmBaseUrl .'/comparisons/'. $id )
+            ->to( $this->crmBaseUrl .'/recommendations/'. $id )
             ->get();
     }
 
