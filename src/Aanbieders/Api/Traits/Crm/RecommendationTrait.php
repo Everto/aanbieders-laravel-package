@@ -7,12 +7,13 @@ trait RecommendationTrait {
 
     /**
      * @param int $id
+     * @param int $comparisonId
      * @return \stdClass
      */
-    public function getRecommendation($id)
+    public function getRecommendation($id, $comparisonId = 0)
     {
         return $this->returnCrmResponse(
-            $this->getRecommendationServiceProvider()->getRecommendation($id)
+            $this->getRecommendationServiceProvider()->getRecommendation($id, $comparisonId)
         );
     }
 

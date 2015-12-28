@@ -11,10 +11,11 @@ class RecommendationServiceProvider extends BaseServiceProvider {
     }
 
 
-    public function getRecommendation($id)
+    public function getRecommendation($id, $comparisonId = 0)
     {
         return $this->getCurlService()
             ->to( $this->crmBaseUrl .'/recommendations/'. $id )
+            ->withData( array( 'comparison_id' => $comparisonId ) )
             ->get();
     }
 
