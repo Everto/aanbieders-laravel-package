@@ -13,17 +13,17 @@ Pull this package in through Composer.
 
     {
         "require": {
-            " aanbieders/laravel-api": "2.*"
+            " aanbieders/laravel-api": "3.*"
         }
     }
 
 ```
 
-Next, you will need to aad several values to your server configuration using the `.env` file:
+Next, you will need to add several values to your `.env` file:
 
 ```
 
-    AANBIEDERS_URL=http://foo.com/bar       // URL to the Aanbieders CRM system
+    AB_CRM_URL=http://foo.com/bar           // URL to the Aanbieders CRM system
     API_staging=false                       // Is this a staging server?
     API_key=your_public_api_key             // Public API key
     API_secret=your_secret_api_key          // Private API key
