@@ -13,7 +13,7 @@ use Aanbieders\Api\Services\Api\AffiliateServiceProvider;
 use Aanbieders\Api\Services\Crm\AddressServiceProvider;
 use Aanbieders\Api\Services\Crm\ClientServiceProvider;
 use Aanbieders\Api\Services\Crm\OrderServiceProvider;
-use Aanbieders\Api\Services\Crm\RecommendationServiceProvider as CrmComparisonServiceProvider;
+use Aanbieders\Api\Services\Crm\RecommendationServiceProvider;
 use Aanbieders\Api\Services\Crm\ContractServiceProvider;
 
 use Aanbieders\Api\Services\Crm\CallMeBackLeadServiceProvider;
@@ -140,10 +140,10 @@ class ApiServiceProvider extends ServiceProvider {
 
     protected function registerCrmComparisonServiceProvider($baseUrl)
     {
-        $this->app['Api.crm.comparison'] = $this->app->share(
+        $this->app['Api.recommendation'] = $this->app->share(
             function($app) use ($baseUrl)
             {
-                return new CrmComparisonServiceProvider( $baseUrl );
+                return new RecommendationServiceProvider( $baseUrl );
             }
         );
     }
@@ -204,7 +204,6 @@ class ApiServiceProvider extends ServiceProvider {
             function($app)
             {
                 return new ApiService(
-                    $app['config'],
                     $app['Api.product'],
                     $app['Api.supplier'],
                     $app['Api.comparison'],
@@ -213,7 +212,7 @@ class ApiServiceProvider extends ServiceProvider {
                     $app['Api.promotion'],
                     $app['Api.address'],
                     $app['Api.client'],
-                    $app['Api.crm.comparison'],
+                    $app['Api.recommendation'],
                     $app['Api.contract'],
                     $app['Api.order'],
                     $app['Api.callMeBackLead'],

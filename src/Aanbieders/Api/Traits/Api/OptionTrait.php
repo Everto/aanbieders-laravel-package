@@ -39,7 +39,7 @@ trait OptionTrait {
     protected function getOptionServiceProvider()
     {
         if( is_null($this->optionServiceProvider) ) {
-            $this->optionServiceProvider = new OptionServiceProvider( $this->config->get('Api::baseUrl') );
+            $this->optionServiceProvider = new OptionServiceProvider();
         }
 
         return $this->optionServiceProvider;

@@ -23,8 +23,6 @@ use Aanbieders\Api\Exceptions\AanbiedersApiException;
 
 class ApiService {
 
-    protected $config = null;
-
     protected $productServiceProvider = null;
     protected $supplierServiceProvider = null;
     protected $apiComparisonServiceProvider = null;
@@ -43,10 +41,8 @@ class ApiService {
     protected $referralLeadServiceProvider = null;
 
 
-    public function __construct(Config $config = null, $productServiceProvider = null, $supplierServiceProvider = null, $apiComparisonServiceProvider = null, $optionServiceProvider = null, $affiliateServiceProvider = null, $promotionServiceProvider = null, $addressServiceProvider = null, $clientServiceProvider = null, $recommendationServiceProvider = null, $contractServiceProvider = null, $orderServiceProvider = null, $callMeBackLeadServiceProvider = null, $clickOutLeadServiceProvider = null, $referralLeadServiceProvider = null)
+    public function __construct($productServiceProvider = null, $supplierServiceProvider = null, $apiComparisonServiceProvider = null, $optionServiceProvider = null, $affiliateServiceProvider = null, $promotionServiceProvider = null, $addressServiceProvider = null, $clientServiceProvider = null, $recommendationServiceProvider = null, $contractServiceProvider = null, $orderServiceProvider = null, $callMeBackLeadServiceProvider = null, $clickOutLeadServiceProvider = null, $referralLeadServiceProvider = null)
     {
-        $this->config = $config;
-
         $this->productServiceProvider = $productServiceProvider;
         $this->supplierServiceProvider = $supplierServiceProvider;
         $this->apiComparisonServiceProvider = $apiComparisonServiceProvider;

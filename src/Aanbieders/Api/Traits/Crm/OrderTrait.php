@@ -47,7 +47,7 @@ trait OrderTrait {
     protected function getOrderServiceProvider()
     {
         if( is_null($this->orderServiceProvider) ) {
-            $this->orderServiceProvider = new OrderServiceProvider( $this->config->get('Api::baseUrl') );
+            $this->orderServiceProvider = new OrderServiceProvider();
         }
 
         return $this->orderServiceProvider;

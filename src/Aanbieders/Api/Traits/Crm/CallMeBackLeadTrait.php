@@ -23,7 +23,7 @@ trait CallMeBackLeadTrait {
     protected function getCallMeBackLeadServiceProvider()
     {
         if( is_null($this->callMeBackLeadServiceProvider) ) {
-            $this->callMeBackLeadServiceProvider = new CallMeBackLeadServiceProvider( $this->config->get('Api::baseUrl') );
+            $this->callMeBackLeadServiceProvider = new CallMeBackLeadServiceProvider();
         }
 
         return $this->callMeBackLeadServiceProvider;

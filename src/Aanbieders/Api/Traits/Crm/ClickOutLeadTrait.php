@@ -23,7 +23,7 @@ trait ClickOutLeadTrait {
     protected function getClickOutLeadServiceProvider()
     {
         if( is_null($this->clickOutLeadServiceProvider) ) {
-            $this->clickOutLeadServiceProvider = new ClickOutLeadServiceProvider( $this->config->get('Api::baseUrl') );
+            $this->clickOutLeadServiceProvider = new ClickOutLeadServiceProvider();
         }
 
         return $this->clickOutLeadServiceProvider;
