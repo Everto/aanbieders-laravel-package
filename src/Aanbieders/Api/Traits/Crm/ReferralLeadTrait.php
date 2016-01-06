@@ -23,7 +23,7 @@ trait ReferralLeadTrait {
     protected function getReferralLeadServiceProvider()
     {
         if( is_null($this->referralLeadServiceProvider) ) {
-            $this->referralLeadServiceProvider = new ReferralLeadServiceProvider( $this->config->get('Api::baseUrl') );
+            $this->referralLeadServiceProvider = new ReferralLeadServiceProvider();
         }
 
         return $this->referralLeadServiceProvider;

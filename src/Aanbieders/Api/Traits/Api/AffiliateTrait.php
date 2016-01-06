@@ -39,7 +39,7 @@ trait AffiliateTrait {
     protected function getAffiliateServiceProvider()
     {
         if( is_null($this->affiliateServiceProvider) ) {
-            $this->affiliateServiceProvider = new AffiliateServiceProvider( $this->config->get('Api::baseUrl') );
+            $this->affiliateServiceProvider = new AffiliateServiceProvider();
         }
 
         return $this->affiliateServiceProvider;

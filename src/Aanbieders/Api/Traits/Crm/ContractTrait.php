@@ -47,7 +47,7 @@ trait ContractTrait {
     protected function getContractServiceProvider()
     {
         if( is_null($this->contractServiceProvider) ) {
-            $this->contractServiceProvider = new ContractServiceProvider( $this->config->get('Api::baseUrl') );
+            $this->contractServiceProvider = new ContractServiceProvider();
         }
 
         return $this->contractServiceProvider;

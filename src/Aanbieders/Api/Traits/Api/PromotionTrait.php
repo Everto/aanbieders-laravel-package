@@ -39,7 +39,7 @@ trait PromotionTrait {
     protected function getPromotionServiceProvider()
     {
         if( is_null($this->promotionServiceProvider) ) {
-            $this->promotionServiceProvider = new PromotionServiceProvider( $this->config->get('Api::baseUrl') );
+            $this->promotionServiceProvider = new PromotionServiceProvider();
         }
 
         return $this->promotionServiceProvider;

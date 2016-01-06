@@ -204,7 +204,6 @@ class ApiServiceProvider extends ServiceProvider {
             function($app)
             {
                 return new ApiService(
-                    $app['config'],
                     $app['Api.product'],
                     $app['Api.supplier'],
                     $app['Api.comparison'],

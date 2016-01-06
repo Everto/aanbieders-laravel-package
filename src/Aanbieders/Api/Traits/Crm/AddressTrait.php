@@ -46,7 +46,7 @@ trait AddressTrait {
     protected function getAddressServiceProvider()
     {
         if( is_null($this->addressServiceProvider) ) {
-            $this->addressServiceProvider = new AddressServiceProvider( $this->config->get('Api::baseUrl') );
+            $this->addressServiceProvider = new AddressServiceProvider();
         }
 
         return $this->addressServiceProvider;

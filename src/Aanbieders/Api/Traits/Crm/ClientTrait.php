@@ -57,7 +57,7 @@ trait ClientTrait {
     protected function getClientServiceProvider()
     {
         if( is_null($this->clientServiceProvider) ) {
-            $this->clientServiceProvider = new ClientServiceProvider( $this->config->get('Api::baseUrl') );
+            $this->clientServiceProvider = new ClientServiceProvider();
         }
 
         return $this->clientServiceProvider;
