@@ -13,7 +13,7 @@ Pull this package in through Composer.
 
     {
         "require": {
-            " aanbieders/laravel-api": "3.*"
+            " aanbieders/laravel-api": "4.*"
         }
     }
 

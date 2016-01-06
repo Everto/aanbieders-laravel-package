@@ -140,7 +140,7 @@ class ApiServiceProvider extends ServiceProvider {
 
     protected function registerCrmComparisonServiceProvider($baseUrl)
     {
-        $this->app['Api.crm.comparison'] = $this->app->share(
+        $this->app['Api.recommendation'] = $this->app->share(
             function($app) use ($baseUrl)
             {
                 return new CrmComparisonServiceProvider( $baseUrl );
@@ -212,7 +212,7 @@ class ApiServiceProvider extends ServiceProvider {
                     $app['Api.promotion'],
                     $app['Api.address'],
                     $app['Api.client'],
-                    $app['Api.crm.comparison'],
+                    $app['Api.recommendation'],
                     $app['Api.contract'],
                     $app['Api.order'],
                     $app['Api.callMeBackLead'],
