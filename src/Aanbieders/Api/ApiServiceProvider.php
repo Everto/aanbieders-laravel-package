@@ -33,7 +33,15 @@ class ApiServiceProvider extends ServiceProvider {
      */
     public function register()
     {
-        $baseUrl = $_SERVER[ 'AB_CRM_URL' ];
+        $baseUrl = null;
+        if( isset($_SERVER[ 'AB_CRM_URL' ]) ) {
+            $baseUrl = $_SERVER[ 'AB_CRM_URL' ];
+        }
+
+        if( isset($_SERVER[ 'AANBIEDERS_URL' ]) ) {
+            $baseUrl = $_SERVER[ 'AANBIEDERS_URL' ];
+        }
+
 
         // Register Aanbieders engine service providers
         $this->registerProductServiceProvider();

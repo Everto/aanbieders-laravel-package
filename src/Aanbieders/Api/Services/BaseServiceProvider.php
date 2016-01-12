@@ -18,8 +18,12 @@ class BaseServiceProvider {
 
     public function __construct($crmBaseUrl = null)
     {
-        if( is_null($crmBaseUrl) ) {
+        if( isset($_SERVER[ 'AB_CRM_URL' ]) && is_null($crmBaseUrl) ) {
             $crmBaseUrl = $_SERVER[ 'AB_CRM_URL' ];
+        }
+
+        if( isset($_SERVER[ 'AANBIEDERS_URL' ]) && is_null($crmBaseUrl) ) {
+            $crmBaseUrl = $_SERVER[ 'AANBIEDERS_URL' ];
         }
 
         $this->crmBaseUrl = $crmBaseUrl;
